@@ -1,1 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Respawnerz - Gaming news, trailers, and everything that drops." />
+  <title>Respawnerz - Gaming News &amp; Trailers</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="favicon.ico" />
+</head>
+<body>
 
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="container">
+      <div class="header-inner">
+        <a href="index.html" class="site-logo">RESP<span>AWN</span>ERZ</a>
+        <nav class="main-nav" id="main-nav">
+          <a href="index.html" class="active">Home</a>
+          <a href="category.html">News</a>
+          <a href="category.html">Trailers</a>
+          <a href="category.html">Reviews</a>
+          <a href="category.html">Guides</a>
+          <a href="category.html">Esports</a>
+        </nav>
+        <div class="header-search">
+          <span class="search-icon">&#x2315;</span>
+          <input type="text" placeholder="Search games..." />
+        </div>
+        <button class="mobile-menu-btn" onclick="document.getElementById('main-nav').classList.toggle('open')">&#9776;</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- TICKER -->
+  <div class="ticker-bar">
+    <div class="container">
+      <div class="ticker-inner">
+        <span class="ticker-label">Breaking</span>
+        <div class="ticker-track">
+          <div class="ticker-content">
+            <span class="ticker-item"><a href="#">GTA VI release window confirmed for fall 2026</a><span class="ticker-sep">//</span></span>
+            <span class="ticker-item"><a href="#">Elden Ring 2 officially announced at Summer Game Fest</a><span class="ticker-sep">//</span></span>
+            <span class="ticker-item"><a href="#">Call of Duty: Black Ops VII gameplay reveal drops Thursday</a><span class="ticker-sep">//</span></span>
+            <span class="ticker-item"><a href="#">Nintendo Switch 2 Pro controller detailed</a><span class="ticker-sep">//</span></span>
+            <span class="ticker-item"><a href="#">Hades III early access starts next month</a><span class="ticker-sep">//</span></span>
+            <!-- duplicate for infinite scroll -->
+            <span class="ticker-item"><a href="#">GTA VI release window confirmed for fall 2026</a><span class="ticker-sep">//</span></span>
+            <span class="ticker-item"><a href="#">Elden Ring 2 officially announced at Summer Game Fest</a><span class="ticker-sep">//</span></span>
+            <span class="ticker-item"><a href="#">Call of Duty: Black Ops VII gameplay reveal drops Thursday</a><span class="ticker-sep">//</span></span>
+            <span class="ticker-item"><a href="#">Nintendo Switch 2 Pro controller detailed</a><span class="ticker-sep">//</span></span>
+            <span class="ticker-item"><a href="#">Hades III early access starts next month</a></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-grid">
+
+          <!-- Featured Post -->
+          <a href="post.html" class="post-hero">
+            <img
+              src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=900&q=80"
+              alt="GTA VI Featured"
+              class="post-hero-image"
+            />
+            <div class="post-hero-body">
+              <span class="post-category cat-trailers">Trailers</span>
+              <h2><a href="post.html">GTA VI Second Trailer Drops: Everything We Spotted in 4 Minutes</a></h2>
+              <p class="post-excerpt">Rockstar just dropped the second trailer and we broke it down frame by frame. Vice City looks completely different, the protagonist reveal is wild, and one detail might change everything.</p>
+              <div class="post-meta">
+                <span>Jun 07, 2026</span>
+                <span>&#x2022; 5 min read</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- Hero Sidebar -->
+          <div class="hero-sidebar">
+            <a href="post.html" class="post-card-compact">
+              <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=200&q=70" alt="" class="thumb" />
+              <div>
+                <span class="post-category cat-trailers">Trailers</span>
+                <h4><a href="post.html">Elden Ring 2 Reveal: Every Lore Clue in the Teaser</a></h4>
+                <div class="post-meta"><span>Jun 06, 2026</span></div>
+              </div>
+            </a>
+            <a href="post.html" class="post-card-compact">
+              <img src="https://images.unsplash.com/photo-1612287230202-1ff1d85d1bdf?w=200&q=70" alt="" class="thumb" />
+              <div>
+                <span class="post-category cat-reviews">Reviews</span>
+                <h4><a href="post.html">Nintendo Switch 2 Pro Controller First Look</a></h4>
+                <div class="post-meta"><span>Jun 05, 2026</span></div>
+              </div>
+            </a>
+            <a href="post.html" class="post-card-compact">
+              <img src="https://images.unsplash.com/photo-1594652634010-275456c808d0?w=200&q=70" alt="" class="thumb" />
+              <div>
+                <span class="post-category cat-esports">Esports</span>
+                <h4><a href="post.html">Valorant Masters 2026 - Who's Taking the Trophy?</a></h4>
+                <div class="post-meta"><span>Jun 04, 2026</span></div>
+              </div>
+            </a>
+            <a href="post.html" class="post-card-compact">
+              <img src="https://images.unsplash.com/photo-1627856013091-fed6e4e30025?w=200&q=70" alt="" class="thumb" />
+              <div>
+                <span class="post-category cat-guides">Guides</span>
+                <h4><a href="post.html">Hades III: Best Build for the First Boss Rush</a></h4>
+                <div class="post-meta"><span>Jun 03, 2026</span></div>
+              </div>
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- LATEST NEWS GRID -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-title">// Latest News</span>
+          <a href="category.html" class="section-link">All News &rarr;</a>
+        </div>
+        <div class="news-grid">
+          <div class="post-card-grid">
+            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=75" alt="" class="thumb" />
+            <div class="card-body">
+              <span class="post-category cat-trailers">Trailers</span>
+              <h3><a href="post.html">Black Ops VII Multiplayer Reveal: Everything in the 6-Minute Trailer</a></h3>
+              <p class="post-excerpt">New movement, new maps, and a surprise returning mode. Here's every detail from today's reveal.</p>
+              <div class="post-meta"><span>Jun 07, 2026</span><span>4 min</span></div>
+            </div>
+          </div>
+          <div class="post-card-grid">
+            <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?w=600&q=75" alt="" class="thumb" />
+            <div class="card-body">
+              <span class="post-category">News</span>
+              <h3><a href="post.html">Summer Game Fest 2026: All Announcements in One Place</a></h3>
+              <p class="post-excerpt">From surprise indie drops to the big AAA reveals - the complete rundown from this year's showcase.</p>
+              <div class="post-meta"><span>Jun 06, 2026</span><span>8 min</span></div>
+            </div>
+          </div>
+          <div class="post-card-grid">
+            <img src="https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?w=600&q=75" alt="" class="thumb" />
+            <div class="card-body">
+              <span class="post-category cat-reviews">Reviews</span>
+              <h3><a href="post.html">Metaphor ReFantazio DLC Review - Worth the Return?</a></h3>
+              <p class="post-excerpt">The first major expansion to Atlus's JRPG hit adds 15 hours - but is the story worth your time?</p>
+              <div class="post-meta"><span>Jun 05, 2026</span><span>6 min</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TRAILERS SECTION -->
+    <section class="section" style="padding-top: 0;">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-title">// Trailers</span>
+          <a href="category.html" class="section-link">All Trailers &rarr;</a>
+        </div>
+        <div class="trailers-grid">
+          <div class="trailer-card">
+            <img src="https://images.unsplash.com/photo-1536240478700-b869ad10e128?w=700&q=75" alt="" class="trailer-thumb" />
+            <div class="trailer-overlay">
+              <div class="play-btn">&#9654;</div>
+              <div class="trailer-info">
+                <span class="post-category cat-trailers">Trailers</span>
+                <h3>Elden Ring 2 - Official Reveal Trailer</h3>
+                <div class="post-meta"><span>Jun 06, 2026</span><span>3:24</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="trailer-card">
+            <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=700&q=75" alt="" class="trailer-thumb" />
+            <div class="trailer-overlay">
+              <div class="play-btn">&#9654;</div>
+              <div class="trailer-info">
+                <span class="post-category cat-trailers">Trailers</span>
+                <h3>GTA VI - Second Official Trailer</h3>
+                <div class="post-meta"><span>Jun 05, 2026</span><span>4:12</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LATEST + SIDEBAR -->
+    <section class="section" style="padding-top: 0;">
+      <div class="container">
+        <div class="latest-grid">
+
+          <div>
+            <div class="section-header">
+              <span class="section-title">// More News</span>
+            </div>
+            <div class="latest-list">
+              <a href="post.html" class="post-card-horizontal">
+                <img src="https://images.unsplash.com/photo-1586182987320-4f376d39d787?w=400&q=70" alt="" class="thumb" />
+                <div class="card-body">
+                  <span class="post-category cat-guides">Guides</span>
+                  <h3><a href="post.html">Hades III: Complete Skill Tree Breakdown for Early Access</a></h3>
+                  <p class="post-excerpt" style="font-size:0.82rem; color:var(--text-secondary); margin-top:6px;">We spent 20 hours in early access so you don't have to start blind.</p>
+                  <div class="post-meta" style="margin-top:10px;"><span>Jun 04, 2026</span><span>7 min</span></div>
+                </div>
+              </a>
+              <a href="post.html" class="post-card-horizontal" style="margin-top:12px;">
+                <img src="https://images.unsplash.com/photo-1560253023-3ec5d502959f?w=400&q=70" alt="" class="thumb" />
+                <div class="card-body">
+                  <span class="post-category">News</span>
+                  <h3><a href="post.html">PlayStation Plus June 2026 Free Games Revealed</a></h3>
+                  <p class="post-excerpt" style="font-size:0.82rem; color:var(--text-secondary); margin-top:6px;">This month's lineup has one genuine surprise alongside the usual suspects.</p>
+                  <div class="post-meta" style="margin-top:10px;"><span>Jun 03, 2026</span><span>2 min</span></div>
+                </div>
+              </a>
+              <a href="post.html" class="post-card-horizontal" style="margin-top:12px;">
+                <img src="https://images.unsplash.com/photo-1547394765-185e1e68f34e?w=400&q=70" alt="" class="thumb" />
+                <div class="card-body">
+                  <span class="post-category cat-esports">Esports</span>
+                  <h3><a href="post.html">League of Legends Worlds 2026 Format Changes Explained</a></h3>
+                  <p class="post-excerpt" style="font-size:0.82rem; color:var(--text-secondary); margin-top:6px;">Riot just reworked the Worlds bracket and the competitive community is split.</p>
+                  <div class="post-meta" style="margin-top:10px;"><span>Jun 02, 2026</span><span>4 min</span></div>
+                </div>
+              </a>
+              <a href="post.html" class="post-card-horizontal" style="margin-top:12px;">
+                <img src="https://images.unsplash.com/photo-1614294148960-9aa740632a87?w=400&q=70" alt="" class="thumb" />
+                <div class="card-body">
+                  <span class="post-category cat-reviews">Reviews</span>
+                  <h3><a href="post.html">Xbox Game Pass June 2026 - New Additions Worth Playing</a></h3>
+                  <p class="post-excerpt" style="font-size:0.82rem; color:var(--text-secondary); margin-top:6px;">Three strong additions and one legacy title making its Game Pass debut.</p>
+                  <div class="post-meta" style="margin-top:10px;"><span>Jun 01, 2026</span><span>3 min</span></div>
+                </div>
+              </a>
+            </div>
+
+            <div class="pagination">
+              <a href="#" class="page-btn active">01</a>
+              <a href="#" class="page-btn">02</a>
+              <a href="#" class="page-btn">03</a>
+              <a href="#" class="page-btn">Next &rarr;</a>
+            </div>
+          </div>
+
+          <!-- Sidebar -->
+          <aside class="sidebar">
+            <div class="widget">
+              <div class="widget-header">
+                <h3 class="widget-title">// Trending</h3>
+              </div>
+              <div class="widget-body">
+                <ul class="trending-list">
+                  <li class="trending-item">
+                    <span class="trending-num">01</span>
+                    <div class="trending-text">
+                      <h5><a href="post.html">GTA VI Second Trailer - Frame by Frame Breakdown</a></h5>
+                      <div class="post-meta"><span>12.4k views</span></div>
+                    </div>
+                  </li>
+                  <li class="trending-item">
+                    <span class="trending-num">02</span>
+                    <div class="trending-text">
+                      <h5><a href="post.html">Every Game Announced at Summer Game Fest 2026</a></h5>
+                      <div class="post-meta"><span>9.1k views</span></div>
+                    </div>
+                  </li>
+                  <li class="trending-item">
+                    <span class="trending-num">03</span>
+                    <div class="trending-text">
+                      <h5><a href="post.html">Elden Ring 2 Lore Breakdown - Who is the New Enemy?</a></h5>
+                      <div class="post-meta"><span>7.8k views</span></div>
+                    </div>
+                  </li>
+                  <li class="trending-item">
+                    <span class="trending-num">04</span>
+                    <div class="trending-text">
+                      <h5><a href="post.html">Hades III Early Access - First Impressions</a></h5>
+                      <div class="post-meta"><span>5.2k views</span></div>
+                    </div>
+                  </li>
+                  <li class="trending-item">
+                    <span class="trending-num">05</span>
+                    <div class="trending-text">
+                      <h5><a href="post.html">Black Ops VII - New Killstreaks Confirmed</a></h5>
+                      <div class="post-meta"><span>4.6k views</span></div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="widget">
+              <div class="widget-header">
+                <h3 class="widget-title">// Browse Tags</h3>
+              </div>
+              <div class="widget-body">
+                <div class="tags-cloud">
+                  <a href="#" class="tag">GTA VI</a>
+                  <a href="#" class="tag">Elden Ring</a>
+                  <a href="#" class="tag">Nintendo</a>
+                  <a href="#" class="tag">PlayStation</a>
+                  <a href="#" class="tag">Xbox</a>
+                  <a href="#" class="tag">Trailers</a>
+                  <a href="#" class="tag">Esports</a>
+                  <a href="#" class="tag">Indie</a>
+                  <a href="#" class="tag">PC Gaming</a>
+                  <a href="#" class="tag">Hades III</a>
+                  <a href="#" class="tag">COD</a>
+                  <a href="#" class="tag">RPG</a>
+                  <a href="#" class="tag">FPS</a>
+                  <a href="#" class="tag">Game Pass</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="widget">
+              <div class="widget-header">
+                <h3 class="widget-title">// Newsletter</h3>
+              </div>
+              <div class="widget-body">
+                <p style="font-size:0.82rem; color:var(--text-secondary); margin-bottom:12px;">Gaming news. No fluff. Straight to your inbox.</p>
+                <input
+                  type="email"
+                  placeholder="your@email.com"
+                  style="width:100%; background:var(--bg-secondary); border:1px solid var(--border); border-radius:var(--radius); padding:8px 12px; color:var(--text-primary); font-family:var(--font-mono); font-size:0.75rem; margin-bottom:8px; outline:none;"
+                />
+                <button style="width:100%; background:var(--accent); color:var(--bg-primary); border:none; padding:9px; border-radius:var(--radius); font-family:var(--font-mono); font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; cursor:pointer; font-weight:600;">Subscribe</button>
+              </div>
+            </div>
+          </aside>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="index.html" class="site-logo">RESP<span>AWN</span>ERZ</a>
+          <p>Gaming news and trailers, delivered fast. No padding, no filler - just what dropped.</p>
+        </div>
+        <div>
+          <p class="footer-heading">Coverage</p>
+          <ul class="footer-links">
+            <li><a href="category.html">News</a></li>
+            <li><a href="category.html">Trailers</a></li>
+            <li><a href="category.html">Reviews</a></li>
+            <li><a href="category.html">Guides</a></li>
+            <li><a href="category.html">Esports</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer-heading">Platform</p>
+          <ul class="footer-links">
+            <li><a href="#">PlayStation</a></li>
+            <li><a href="#">Xbox</a></li>
+            <li><a href="#">Nintendo</a></li>
+            <li><a href="#">PC</a></li>
+            <li><a href="#">Mobile</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer-heading">Site</p>
+          <ul class="footer-links">
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copy">&copy; 2026 Respawnerz. All rights reserved.</p>
+        <div class="footer-social">
+          <a href="#" class="social-link" title="X / Twitter">&#120143;</a>
+          <a href="#" class="social-link" title="YouTube">&#9654;</a>
+          <a href="#" class="social-link" title="Instagram">&#9638;</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
