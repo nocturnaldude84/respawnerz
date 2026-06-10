@@ -1213,3 +1213,90 @@ p:last-child {
   width: 100%;
   height: 100%;
 }
+/* ============================================================
+   VIDEO EMBED (YouTube responsive wrapper)
+   ============================================================ */
+ 
+.video-embed {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  margin: 24px 0;
+}
+ 
+.video-embed iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+ 
+/* ============================================================
+   TRAILERS PAGE
+   ============================================================ */
+ 
+.trailers-page-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px 32px;
+  padding-bottom: 80px;
+}
+ 
+.trailer-entry {
+  display: flex;
+  flex-direction: column;
+}
+ 
+.trailer-entry .video-embed {
+  margin: 0 0 16px 0;
+  border-color: var(--border);
+  transition: border-color var(--transition-slow);
+}
+ 
+.trailer-entry:hover .video-embed {
+  border-color: var(--accent);
+  box-shadow: var(--shadow-neon);
+}
+ 
+.trailer-entry-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+ 
+.trailer-entry-info .post-category {
+  align-self: flex-start;
+}
+ 
+.trailer-entry-info h3 {
+  font-size: 1rem;
+  line-height: 1.2;
+}
+ 
+.trailer-entry-info h3 a:hover {
+  color: var(--accent);
+}
+ 
+.trailer-entry-info p {
+  font-size: 0.84rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+ 
+@media (max-width: 480px) {
+  .container { padding: 0 16px; }
+  .news-grid { grid-template-columns: 1fr; }
+  .post-card-horizontal { grid-template-columns: 1fr; }
+  .post-card-horizontal .thumb { height: 160px; }
+}
+ 
+@media (max-width: 768px) {
+  .trailers-page-grid { grid-template-columns: 1fr; gap: 32px; }
+}
+ 
