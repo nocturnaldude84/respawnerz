@@ -1196,3 +1196,20 @@ p:last-child {
   .post-card-horizontal { grid-template-columns: 1fr; }
   .post-card-horizontal .thumb { height: 160px; }
 }
+.video-embed {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  margin: 24px 0;
+}
+
+.video-embed iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
