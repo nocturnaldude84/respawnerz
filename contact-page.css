@@ -1,0 +1,112 @@
+/* ============================================================
+   contact-page.css
+   Respawnerz — Contact page form styles
+   Add a second <link> to contact.html pointing at this file.
+   All tokens mirror the values visible in the main site.
+   ============================================================ */
+
+/* ---------- Form wrapper ---------- */
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 640px;
+  margin-top: 2rem;
+}
+
+/* ---------- Individual field group ---------- */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* ---------- Labels ---------- */
+.form-group label {
+  font-family: inherit;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #00e5ff;          /* neon cyan — matches site accent */
+}
+
+/* ---------- Inputs & Textarea ---------- */
+.form-group input,
+.form-group textarea {
+  background: #0a0a0f;     /* slightly lighter than body bg so fields read as inset */
+  border: 1px solid #1e2a33;
+  border-left: 3px solid #00e5ff;   /* neon left-border accent */
+  color: #e0e0e0;
+  font-family: inherit;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  padding: 0.75rem 1rem;
+  width: 100%;
+  outline: none;
+  transition: border-color 0.2s ease, background 0.2s ease;
+  box-sizing: border-box;
+  border-radius: 0;        /* hard edges match the cyberpunk aesthetic */
+  -webkit-appearance: none;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #3d4f5a;
+  font-size: 0.9rem;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #00e5ff;
+  background: #0d1117;
+  box-shadow: 0 0 0 1px #00e5ff22, 0 0 12px #00e5ff18;
+}
+
+/* ---------- Textarea ---------- */
+.form-group textarea {
+  resize: vertical;
+  min-height: 160px;
+}
+
+/* ---------- Submit button ---------- */
+.btn-submit {
+  align-self: flex-start;
+  background: transparent;
+  border: 2px solid #00e5ff;
+  color: #00e5ff;
+  font-family: inherit;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 0.75rem 2.25rem;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-submit:hover {
+  background: #00e5ff;
+  color: #000;
+  box-shadow: 0 0 18px #00e5ff55;
+}
+
+.btn-submit:active {
+  background: #00b8cc;
+  border-color: #00b8cc;
+  box-shadow: none;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 600px) {
+  .contact-form {
+    max-width: 100%;
+  }
+
+  .btn-submit {
+    width: 100%;
+    text-align: center;
+  }
+}
