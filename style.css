@@ -1235,7 +1235,107 @@ p:last-child {
   height: 100%;
   border: none;
 }
- 
+
+/* ════════════════════════════════════════════════════
+   SEARCH PAGE CSS — append these rules to style.css
+   ════════════════════════════════════════════════════ */
+
+/* ─── Search Page: Main search bar ─────────────────── */
+.search-page-bar {
+  padding: 40px 0 32px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 32px;
+}
+
+.search-input-wrap {
+  display: flex;
+  align-items: center;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+
+.search-input-wrap:focus-within {
+  border-color: var(--accent);
+}
+
+.search-icon-lg {
+  font-size: 1.1rem;
+  padding: 0 14px;
+  color: var(--text-secondary);
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.search-main-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 14px 12px 14px 0;
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+}
+
+.search-main-input::placeholder {
+  color: var(--text-secondary);
+  opacity: 0.6;
+}
+
+.search-submit-btn {
+  background: var(--accent);
+  color: var(--bg-primary);
+  border: none;
+  padding: 14px 22px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: opacity 0.15s;
+}
+
+.search-submit-btn:hover {
+  opacity: 0.85;
+}
+
+/* ─── Search status line ────────────────────────────── */
+.search-status {
+  margin-bottom: 20px;
+}
+
+.search-result-count {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  letter-spacing: 0.04em;
+}
+
+.accent-text {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.search-no-results {
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  padding: 24px 0;
+}
+
+/* ─── Header search icon fix ────────────────────────── */
+/* Replaces the broken &#x2315; helm symbol */
+.search-icon {
+  font-size: 1rem;
+  line-height: 1;
+}
+
 /* ============================================================
    TRAILERS PAGE
    ============================================================ */
