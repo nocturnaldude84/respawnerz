@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="assets/favicon-64x64.png" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Get in touch with the Respawnerz team. Send us a tip, a question, or just say hello." />
+  <meta property="og:title" content="Contact - Respawnerz" />
+  <meta property="og:description" content="Get in touch with the Respawnerz team. Send us a tip, a question, or just say hello." />
+  <meta property="og:url" content="https://respawnerz.com/contact.html" />
+  <meta property="og:type" content="website" />
+  <title>Contact - Respawnerz</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="container">
+      <div class="header-inner">
+        <a href="index.html" class="site-logo">RESP<span>AWN</span>ERZ</a>
+        <nav class="main-nav" id="main-nav">
+          <a href="index.html">Home</a>
+          <a href="news.html">News</a>
+          <a href="trailers.html">Trailers</a>
+          <a href="reviews.html">Reviews</a>
+          <a href="guides.html">Guides</a>
+          <a href="esports.html">Esports</a>
+        </nav>
+        <div class="header-search">
+          <span class="search-icon">&#x2315;</span>
+          <input type="text" placeholder="Search games..." />
+        </div>
+        <button class="mobile-menu-btn" onclick="document.getElementById('main-nav').classList.toggle('open')">&#9776;</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- PAGE HEADER -->
+    <div class="post-header-section">
+      <div class="container">
+        <div class="post-header-inner">
+          <h1 class="post-title">Contact Us</h1>
+          <p class="post-subtitle">Got a tip, a question, or something worth covering? We're listening.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE BODY -->
+    <div class="container">
+      <div class="post-layout">
+
+        <article class="post-content">
+
+          <p>Whether you have a news tip, a question about something we covered, or just want to reach out, drop us a message below. We read every submission.</p>
+
+          <form action="https://formspree.io/f/mojzpzrv" method="POST" class="contact-form">
+
+            <div class="form-group">
+              <label for="name">Your Name</label>
+              <input type="text" id="name" name="name" placeholder="John Doe" required />
+            </div>
+
+            <div class="form-group">
+              <label for="email">Your Email</label>
+              <input type="email" id="email" name="email" placeholder="you@example.com" required />
+            </div>
+
+            <div class="form-group">
+              <label for="subject">Subject</label>
+              <input type="text" id="subject" name="subject" placeholder="News tip, question, other..." />
+            </div>
+
+            <div class="form-group">
+              <label for="message">Your Message</label>
+              <textarea id="message" name="message" rows="7" placeholder="What's on your mind?" required></textarea>
+            </div>
+
+            <button type="submit" class="btn-submit">Send Message</button>
+
+          </form>
+
+        </article>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="index.html" class="site-logo">RESP<span>AWN</span>ERZ</a>
+          <p>Gaming news and trailers, delivered fast. No padding, no filler - just what dropped.</p>
+        </div>
+        <div>
+          <p class="footer-heading">Coverage</p>
+          <ul class="footer-links">
+            <li><a href="news.html">News</a></li>
+            <li><a href="trailers.html">Trailers</a></li>
+            <li><a href="reviews.html">Reviews</a></li>
+            <li><a href="guides.html">Guides</a></li>
+            <li><a href="esports.html">Esports</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer-heading">Platform</p>
+          <ul class="footer-links">
+            <li><a href="#">PlayStation</a></li>
+            <li><a href="#">Xbox</a></li>
+            <li><a href="#">Nintendo</a></li>
+            <li><a href="#">PC</a></li>
+            <li><a href="#">Mobile</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer-heading">Site</p>
+          <ul class="footer-links">
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copy">&copy; 2026 Respawnerz. All rights reserved.</p>
+        <div class="footer-social">
+          <a href="#" class="social-link" title="X / Twitter">&#120143;</a>
+          <a href="#" class="social-link" title="YouTube">&#9654;</a>
+          <a href="#" class="social-link" title="Instagram">&#9638;</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
