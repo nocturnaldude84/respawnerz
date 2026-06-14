@@ -27,39 +27,57 @@ export async function onRequest(context) {
     const tokenData = await tokenRes.json();
     const accessToken = tokenData.access_token;
 
-    // Step 2: query IGDB for upcoming releases (next 30 days)
+    const headers = {
+      'Client-ID': clientId,
+      'Authorization': `Bearer ${accessToken}`,
+      'Content-Type': 'text/plain',
+    };
+
+    // Step 2: query release_dates directly for next 30 days
     const now  = Math.floor(Date.now() / 1000);
     const in30 = now + (30 * 24 * 60 * 60);
 
-    const body = `
-      fields name, cover.url, platforms.id, platforms.name, genres.name, release_dates.date, release_dates.platform;
-      where release_dates.date >= ${now}
-        & release_dates.date <= ${in30}
-        & category = 0
-        & version_parent = null;
-      sort release_dates.date asc;
+    const releasesBody = `
+      fields date, platform.id, platform.name, game.id, game.name, game.cover.url, game.genres.name, game.platforms.id, game.platforms.name;
+      where date >= ${now} & date <= ${in30};
+      sort date asc;
       limit 80;
     `;
 
-    const igdbRes = await fetch('https://api.igdb.com/v4/games', {
+    const releasesRes = await fetch('https://api.igdb.com/v4/release_dates', {
       method: 'POST',
-      headers: {
-        'Client-ID': clientId,
-        'Authorization': `Bearer ${accessToken}`,
-        'Content-Type': 'text/plain',
-      },
-      body,
+      headers,
+      body: releasesBody,
     });
 
-    if (!igdbRes.ok) {
-      const err = await igdbRes.text();
+    if (!releasesRes.ok) {
+      const err = await releasesRes.text();
       return new Response(
-        JSON.stringify({ error: `IGDB error: ${err}` }),
-        { status: igdbRes.status, headers: { 'Content-Type': 'application/json' } }
+        JSON.stringify({ error: `IGDB release_dates error: ${err}` }),
+        { status: releasesRes.status, headers: { 'Content-Type': 'application/json' } }
       );
     }
 
-    const games = await igdbRes.json();
+    const releases = await releasesRes.json();
+
+    // Deduplicate games by game.id, keeping earliest release date
+    const gameMap = new Map();
+    for (const r of releases) {
+      if (!r.game) continue;
+      const id = r.game.id;
+      if (!gameMap.has(id)) {
+        gameMap.set(id, {
+          id,
+          name: r.game.name,
+          cover: r.game.cover || null,
+          genres: r.game.genres || [],
+          platforms: r.game.platforms || [],
+          releaseDate: r.date || null,
+        });
+      }
+    }
+
+    const games = Array.from(gameMap.values());
 
     return new Response(
       JSON.stringify({ games }),
