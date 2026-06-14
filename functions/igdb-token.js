@@ -11,7 +11,7 @@ export async function onRequest(context) {
 
   try {
     const res = await fetch(
-      `https://id.twitch.tv/oauth2/token?client_id=${690unlca6dw5m4l6p5xll66bhw4cnd}&client_secret=${n6iouurc232t0joxvkconpwgkdvayo}&grant_type=client_credentials`,
+      `https://id.twitch.tv/oauth2/token?client_id=${clientId}&client_secret=${clientSecret}&grant_type=client_credentials`
       { method: 'POST' }
     );
 
