@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trailers | Respawnerz</title>
+  <meta name="description" content="Latest gaming trailers from IGN, Xbox, PlayStation, and Nintendo. Auto-updated via YouTube." />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── Page-scoped styles ── */
+    .trailers-hero {
+      padding: 60px 20px 40px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .trailers-hero .eyebrow {
+      font-family: var(--font-mono, 'Courier New', monospace);
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--neon);
+      margin-bottom: 12px;
+    }
+
+    .trailers-hero h1 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 800;
+      color: var(--text-primary);
+      margin: 0 0 12px;
+      line-height: 1.15;
+    }
+
+    .trailers-hero p {
+      color: var(--text-muted);
+      font-size: 1rem;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    /* ── Channel filter tabs ── */
+    .channel-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0;
+      border-bottom: 1px solid var(--border);
+      padding: 0 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .channel-tab {
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid transparent;
+      color: var(--text-muted);
+      padding: 14px 18px;
+      font-family: var(--font-mono, 'Courier New', monospace);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      margin-bottom: -1px;
+      transition: color 0.15s, border-color 0.15s;
+    }
+
+    .channel-tab:hover {
+      color: var(--text-primary);
+    }
+
+    .channel-tab.active {
+      color: var(--neon);
+      border-bottom-color: var(--neon);
+    }
+
+    /* ── Videos grid ── */
+    .videos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      max-width: 1200px;
+      margin: 0 auto 60px;
+    }
+
+    .video-card {
+      background: var(--bg-card, #0f0f0f);
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .video-card:hover {
+      background: var(--bg-card-hover, #161616);
+    }
+
+    /* Thumbnail wrapper with play overlay */
+    .video-card__thumb-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      background: #111;
+    }
+
+    .video-card__thumb {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.2s;
+    }
+
+    .video-card:hover .video-card__thumb {
+      transform: scale(1.03);
+    }
+
+    .play-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.3);
+      opacity: 0;
+      transition: opacity 0.15s;
+    }
+
+    .video-card:hover .play-overlay {
+      opacity: 1;
+    }
+
+    .play-overlay svg {
+      width: 48px;
+      height: 48px;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.8));
+    }
+
+    /* Duration badge */
+    .duration-badge {
+      position: absolute;
+      bottom: 7px;
+      right: 8px;
+      background: rgba(0, 0, 0, 0.82);
+      color: #fff;
+      font-family: var(--font-mono, 'Courier New', monospace);
+      font-size: 0.62rem;
+      padding: 2px 5px;
+      border-radius: 2px;
+      letter-spacing: 0.04em;
+    }
+
+    /* Channel source tag */
+    .channel-badge {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      font-family: var(--font-mono, 'Courier New', monospace);
+      font-size: 0.58rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 3px 7px;
+      border-radius: 2px;
+      font-weight: 700;
+    }
+
+    .channel-badge.ign    { background: #e10000; color: #fff; }
+    .channel-badge.xbox   { background: #107c10; color: #fff; }
+    .channel-badge.ps     { background: #003791; color: #fff; }
+    .channel-badge.nintendo { background: #e4000f; color: #fff; }
+
+    .video-card__body {
+      padding: 14px 16px 18px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .video-card__channel {
+      font-family: var(--font-mono, 'Courier New', monospace);
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--neon);
+    }
+
+    .video-card__title {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.35;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .video-card__meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: auto;
+    }
+
+    /* ── Inline player modal ── */
+    .player-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.92);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .player-modal.open {
+      display: flex;
+    }
+
+    .player-inner {
+      width: 100%;
+      max-width: 900px;
+      position: relative;
+    }
+
+    .player-close {
+      position: absolute;
+      top: -36px;
+      right: 0;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 4px 8px;
+      line-height: 1;
+    }
+
+    .player-close:hover { color: var(--text-primary); }
+
+    .player-frame-wrap {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #000;
+    }
+
+    .player-frame-wrap iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    /* ── States ── */
+    .state-box {
+      text-align: center;
+      padding: 80px 20px;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .state-box .state-icon {
+      font-size: 2.5rem;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .state-box h2 {
+      font-size: 1.1rem;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    .state-box p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .spinner {
+      width: 28px;
+      height: 28px;
+      border: 2px solid var(--border);
+      border-top-color: var(--neon);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      margin: 0 auto 16px;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── API key prompt ── */
+    .api-prompt {
+      background: var(--bg-card, #0f0f0f);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--neon);
+      border-radius: 3px;
+      padding: 20px 24px;
+      max-width: 640px;
+      margin: 40px auto;
+    }
+
+    .api-prompt h3 {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    .api-prompt p {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+
+    .api-prompt code {
+      font-family: var(--font-mono, 'Courier New', monospace);
+      font-size: 0.78rem;
+      background: #000;
+      color: var(--neon);
+      padding: 2px 6px;
+      border-radius: 2px;
+    }
+
+    .api-key-form {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .api-key-input {
+      flex: 1;
+      min-width: 200px;
+      background: #000;
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      padding: 8px 12px;
+      font-family: var(--font-mono, 'Courier New', monospace);
+      font-size: 0.8rem;
+      border-radius: 3px;
+      outline: none;
+    }
+
+    .api-key-input:focus { border-color: var(--neon); }
+
+    .btn-load {
+      background: var(--neon);
+      color: #000;
+      border: none;
+      padding: 8px 18px;
+      font-family: var(--font-mono, 'Courier New', monospace);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+
+    .btn-load:hover { opacity: 0.85; }
+    .btn-load:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    .key-note {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 8px;
+      margin-bottom: 0;
+    }
+
+    /* result meta */
+    .result-meta {
+      text-align: center;
+      font-family: var(--font-mono, 'Courier New', monospace);
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      padding: 20px 20px 4px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 600px) {
+      .videos-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .channel-tab {
+        padding: 12px 12px;
+        font-size: 0.65rem;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .videos-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ── -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="site-logo">RESPAWNERZ</a>
+      <nav class="site-nav">
+        <a href="index.html">Home</a>
+        <a href="upcoming-releases.html">Releases</a>
+        <a href="trailers.html" class="active">Trailers</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ── HERO ── -->
+  <section class="trailers-hero">
+    <p class="eyebrow">// YouTube Data API v3</p>
+    <h1>Latest Trailers</h1>
+    <p>Auto-pulled from IGN, Xbox, PlayStation, and Nintendo. Updated on every page load.</p>
+  </section>
+
+  <!-- ── MAIN ── -->
+  <main id="trailers-main">
+
+    <!-- API key prompt -->
+    <div class="api-prompt" id="key-prompt">
+      <h3>Enter your YouTube Data API v3 key</h3>
+      <p>
+        Get a free key from <code>console.cloud.google.com</code>. Enable the
+        YouTube Data API v3, create a browser-restricted API key, and paste it below.
+        Your key is saved in your browser only and only used to call YouTube directly.
+      </p>
+      <p>
+        Free quota: <code>10,000 units/day</code>. This page uses roughly 4 units
+        per channel fetch, so you can reload ~2,500 times per day before hitting the limit.
+      </p>
+      <div class="api-key-form">
+        <input
+          type="text"
+          id="api-key-input"
+          class="api-key-input"
+          placeholder="Paste YouTube API key..."
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <button class="btn-load" id="save-key-btn" onclick="saveKey()">Load</button>
+      </div>
+      <p class="key-note">Your key is never stored server-side. It lives in localStorage only.</p>
+    </div>
+
+    <!-- Channel tabs (hidden until data loads) -->
+    <div class="channel-tabs" id="channel-tabs" style="display:none;">
+      <button class="channel-tab active" data-channel="all" onclick="switchTab('all', this)">All Channels</button>
+      <button class="channel-tab" data-channel="UCKy1dAqELo0zrOtPkf0aTMg" onclick="switchTab('UCKy1dAqELo0zrOtPkf0aTMg', this)">IGN</button>
+      <button class="channel-tab" data-channel="UCpvtp7mH0jtBy3nHpIsM0jQ" onclick="switchTab('UCpvtp7mH0jtBy3nHpIsM0jQ', this)">Xbox</button>
+      <button class="channel-tab" data-channel="UC-2Y8dQb0S6DtpxNgAKoJKA" onclick="switchTab('UC-2Y8dQb0S6DtpxNgAKoJKA', this)">PlayStation</button>
+      <button class="channel-tab" data-channel="UCGIY_O-8vW4rfX98KlMkvRg" onclick="switchTab('UCGIY_O-8vW4rfX98KlMkvRg', this)">Nintendo</button>
+    </div>
+
+    <!-- Result meta -->
+    <p class="result-meta" id="result-meta" style="display:none;"></p>
+
+    <!-- Loading state -->
+    <div class="state-box" id="loading-state" style="display:none;">
+      <div class="spinner"></div>
+      <p id="loading-msg">Fetching trailers...</p>
+    </div>
+
+    <!-- Error state -->
+    <div class="state-box" id="error-state" style="display:none;">
+      <span class="state-icon">!</span>
+      <h2>Could not load trailers</h2>
+      <p id="error-message">Check your API key and try again.</p>
+      <button class="btn-load" style="margin-top:16px;" onclick="resetKey()">Reset Key</button>
+    </div>
+
+    <!-- Videos grid -->
+    <div class="videos-grid" id="videos-grid"></div>
+
+  </main>
+
+  <!-- ── PLAYER MODAL ── -->
+  <div class="player-modal" id="player-modal" onclick="closePlayer(event)">
+    <div class="player-inner" id="player-inner">
+      <button class="player-close" onclick="closeModal()" aria-label="Close">&times;</button>
+      <div class="player-frame-wrap">
+        <iframe
+          id="yt-iframe"
+          allow="autoplay; encrypted-media"
+          allowfullscreen
+        ></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── FOOTER ── -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span class="footer-logo">RESPAWNERZ</span>
+      <p class="footer-copy">Gaming news. No ads. No fluff.</p>
+    </div>
+  </footer>
+
+  <script>
+    // ── Channel config ────────────────────────────────────────────
+    // YouTube channel IDs for each source
+    const CHANNELS = [
+      { id: 'UCKy1dAqELo0zrOtPkf0aTMg', name: 'IGN',         badge: 'ign',      maxResults: 12 },
+      { id: 'UCpvtp7mH0jtBy3nHpIsM0jQ', name: 'Xbox',        badge: 'xbox',     maxResults: 8  },
+      { id: 'UC-2Y8dQb0S6DtpxNgAKoJKA', name: 'PlayStation', badge: 'ps',       maxResults: 8  },
+      { id: 'UCGIY_O-8vW4rfX98KlMkvRg', name: 'Nintendo',    badge: 'nintendo', maxResults: 8  },
+    ];
+
+    const YT_BASE = 'https://www.googleapis.com/youtube/v3';
+    const KEY_STORAGE = 'respawnerz_yt_key';
+
+    // ── State ─────────────────────────────────────────────────────
+    let allVideos = []; // { id, title, thumb, channelName, channelId, badge, publishedAt }
+    let activeChannel = 'all';
+
+    // ── DOM helpers ───────────────────────────────────────────────
+    const $ = id => document.getElementById(id);
+    function show(id) { $(id).style.display = ''; }
+    function hide(id) { $(id).style.display = 'none'; }
+
+    // ── Init ──────────────────────────────────────────────────────
+    window.addEventListener('DOMContentLoaded', () => {
+      const key = localStorage.getItem(KEY_STORAGE);
+      if (key) {
+        hide('key-prompt');
+        fetchAllChannels(key);
+      }
+    });
+
+    // ── Save key ──────────────────────────────────────────────────
+    function saveKey() {
+      const input = $('api-key-input');
+      const key = input.value.trim();
+      if (!key) { input.focus(); return; }
+      localStorage.setItem(KEY_STORAGE, key);
+      hide('key-prompt');
+      fetchAllChannels(key);
+    }
+
+    $('api-key-input').addEventListener('keydown', e => {
+      if (e.key === 'Enter') saveKey();
+    });
+
+    function resetKey() {
+      localStorage.removeItem(KEY_STORAGE);
+      allVideos = [];
+      hide('error-state');
+      $('videos-grid').innerHTML = '';
+      hide('channel-tabs');
+      hide('result-meta');
+      show('key-prompt');
+    }
+
+    // ── Fetch ─────────────────────────────────────────────────────
+    async function fetchAllChannels(key) {
+      show('loading-state');
+      hide('error-state');
+      hide('channel-tabs');
+      hide('result-meta');
+      $('videos-grid').innerHTML = '';
+
+      const results = [];
+      const errors = [];
+
+      for (const ch of CHANNELS) {
+        $('loading-msg').textContent = `Fetching ${ch.name}...`;
+        try {
+          const videos = await fetchChannelVideos(key, ch);
+          results.push(...videos);
+        } catch (err) {
+          errors.push(`${ch.name}: ${err.message}`);
+        }
+      }
+
+      hide('loading-state');
+
+      if (results.length === 0) {
+        show('error-state');
+        $('error-message').textContent = errors.length
+          ? errors.join(' | ')
+          : 'No trailers found. Check your API key or quota.';
+        return;
+      }
+
+      // Sort by publishedAt descending (newest first)
+      results.sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
+      allVideos = results;
+
+      show('channel-tabs');
+      renderVideos(allVideos, 'all');
+    }
+
+    async function fetchChannelVideos(key, ch) {
+      // Search for uploads in the channel (type=video, order=date)
+      // This uses ~1 unit per request (search.list is 100 units per 100 results, but a single request = 1 call)
+      // Actually YouTube search.list costs 100 units. To stay lean we use channels.list to get the uploads
+      // playlist ID first (1 unit), then playlistItems.list (1 unit). Total: ~2 units per channel.
+
+      // Step 1: get uploads playlist ID
+      const chRes = await fetch(
+        `${YT_BASE}/channels?part=contentDetails&id=${ch.id}&key=${key}`
+      );
+      if (!chRes.ok) {
+        const err = await chRes.json().catch(() => ({}));
+        throw new Error(err.error?.message || `HTTP ${chRes.status}`);
+      }
+      const chData = await chRes.json();
+      const uploadsId = chData.items?.[0]?.contentDetails?.relatedPlaylists?.uploads;
+      if (!uploadsId) throw new Error('Uploads playlist not found');
+
+      // Step 2: get latest videos from uploads playlist
+      const plRes = await fetch(
+        `${YT_BASE}/playlistItems?part=snippet&playlistId=${uploadsId}&maxResults=${ch.maxResults}&key=${key}`
+      );
+      if (!plRes.ok) {
+        const err = await plRes.json().catch(() => ({}));
+        throw new Error(err.error?.message || `HTTP ${plRes.status}`);
+      }
+      const plData = await plRes.json();
+
+      return (plData.items || []).map(item => ({
+        id: item.snippet.resourceId.videoId,
+        title: item.snippet.title,
+        thumb:
+          item.snippet.thumbnails?.maxres?.url ||
+          item.snippet.thumbnails?.high?.url ||
+          item.snippet.thumbnails?.medium?.url ||
+          '',
+        channelName: ch.name,
+        channelId: ch.id,
+        badge: ch.badge,
+        publishedAt: item.snippet.publishedAt,
+      }));
+    }
+
+    // ── Tab switching ─────────────────────────────────────────────
+    function switchTab(channelId, btn) {
+      activeChannel = channelId;
+      document.querySelectorAll('.channel-tab').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderVideos(allVideos, channelId);
+    }
+
+    // ── Render ────────────────────────────────────────────────────
+    function renderVideos(videos, channelId) {
+      const grid = $('videos-grid');
+      grid.innerHTML = '';
+
+      const filtered = channelId === 'all'
+        ? videos
+        : videos.filter(v => v.channelId === channelId);
+
+      show('result-meta');
+      $('result-meta').textContent =
+        `${filtered.length} trailer${filtered.length !== 1 ? 's' : ''} — ${channelId === 'all' ? 'all channels' : filtered[0]?.channelName || channelId}`;
+
+      filtered.forEach(v => renderCard(v, grid));
+    }
+
+    function renderCard(video, grid) {
+      const age = timeAgo(video.publishedAt);
+      const card = document.createElement('div');
+      card.className = 'video-card';
+      card.setAttribute('role', 'button');
+      card.setAttribute('tabindex', '0');
+      card.setAttribute('aria-label', `Play ${escHtml(video.title)}`);
+      card.onclick = () => openPlayer(video.id);
+      card.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') openPlayer(video.id); };
+
+      card.innerHTML = `
+        <div class="video-card__thumb-wrap">
+          ${video.thumb
+            ? `<img class="video-card__thumb" src="${escHtml(video.thumb)}" alt="${escHtml(video.title)}" loading="lazy" />`
+            : `<div style="width:100%;height:100%;background:#111;"></div>`
+          }
+          <div class="play-overlay">
+            <svg viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="12" fill="rgba(0,0,0,0.6)"/>
+              <polygon points="9,7 19,12 9,17" fill="var(--neon)"/>
+            </svg>
+          </div>
+          <span class="channel-badge ${escHtml(video.badge)}">${escHtml(video.channelName)}</span>
+        </div>
+        <div class="video-card__body">
+          <p class="video-card__channel">${escHtml(video.channelName)}</p>
+          <p class="video-card__title">${escHtml(video.title)}</p>
+          <p class="video-card__meta">${escHtml(age)}</p>
+        </div>
+      `;
+      grid.appendChild(card);
+    }
+
+    // ── Player modal ──────────────────────────────────────────────
+    function openPlayer(videoId) {
+      $('yt-iframe').src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+      $('player-modal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      $('yt-iframe').src = '';
+      $('player-modal').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function closePlayer(e) {
+      // Close only if clicking the backdrop, not the inner player
+      if (e.target === $('player-modal')) closeModal();
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    // ── Helpers ───────────────────────────────────────────────────
+    function timeAgo(dateStr) {
+      if (!dateStr) return '';
+      const diff = Date.now() - new Date(dateStr).getTime();
+      const mins = Math.floor(diff / 60000);
+      if (mins < 60) return `${mins}m ago`;
+      const hrs = Math.floor(mins / 60);
+      if (hrs < 24) return `${hrs}h ago`;
+      const days = Math.floor(hrs / 24);
+      if (days < 7) return `${days}d ago`;
+      const wks = Math.floor(days / 7);
+      if (wks < 5) return `${wks}w ago`;
+      const d = new Date(dateStr);
+      return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    }
+
+    function escHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+  </script>
+
+</body>
+</html>

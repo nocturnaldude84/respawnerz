@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Upcoming Releases | Respawnerz</title>
+  <meta name="description" content="Every game dropping in the next 30 days. Filter by platform and stay ahead of release day." />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── Page-scoped styles (no global overrides) ── */
+    .releases-hero {
+      padding: 60px 20px 40px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .releases-hero .eyebrow {
+      font-family: var(--font-mono, 'Courier New', monospace);
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--neon);
+      margin-bottom: 12px;
+    }
+
+    .releases-hero h1 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 800;
+      color: var(--text-primary);
+      margin: 0 0 12px;
+      line-height: 1.15;
+    }
+
+    .releases-hero p {
+      color: var(--text-muted);
+      font-size: 1rem;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    /* ── Filter bar ── */
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: center;
+      padding: 28px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .filter-bar label {
+      font-family: var(--font-mono, 'Courier New', monospace);
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-right: 4px;
+    }
+
+    .platform-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 6px 14px;
+      border-radius: 3px;
+      font-size: 0.8rem;
+      font-family: var(--font-mono, 'Courier New', monospace);
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s, background 0.15s;
+    }
+
+    .platform-btn:hover {
+      border-color: var(--neon);
+      color: var(--neon);
+    }
+
+    .platform-btn.active {
+      background: var(--neon);
+      border-color: var(--neon);
+      color: #000;
+      font-weight: 700;
+    }
+
+    /* ── Month grouping header ── */
+    .month-label {
+      font-family: var(--font-mono, 'Courier New', monospace);
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--neon);
+      padding: 24px 20px 10px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* ── Grid ── */
+    .releases-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      max-width: 1200px;
+      margin: 0 auto 60px;
+    }
+
+    .game-card {
+      background: var(--bg-card, #0f0f0f);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transition: background 0.15s;
+      cursor: default;
+    }
+
+    .game-card:hover {
+      background: var(--bg-card-hover, #161616);
+    }
+
+    .game-card__thumb {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+      background: #111;
+    }
+
+    .game-card__thumb-placeholder {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #111;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .game-card__thumb-placeholder svg {
+      width: 40px;
+      height: 40px;
+      opacity: 0.2;
+    }
+
+    .game-card__body {
+      padding: 14px 16px 18px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .game-card__date {
+      font-family: var(--font-mono, 'Courier New', monospace);
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      color: var(--neon);
+      text-transform: uppercase;
+    }
+
+    .game-card__title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.3;
+    }
+
+    .game-card__platforms {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-top: 4px;
+    }
+
+    .platform-tag {
+      font-family: var(--font-mono, 'Courier New', monospace);
+      font-size: 0.58rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      padding: 2px 6px;
+      border-radius: 2px;
+    }
+
+    .game-card__genres {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* ── Countdown badge ── */
+    .countdown-badge {
+      font-family: var(--font-mono, 'Courier New', monospace);
+      font-size: 0.62rem;
+      letter-spacing: 0.08em;
+      background: rgba(0, 255, 136, 0.08);
+      color: var(--neon);
+      border: 1px solid rgba(0, 255, 136, 0.25);
+      padding: 3px 7px;
+      border-radius: 2px;
+      align-self: flex-start;
+      margin-top: auto;
+      padding-top: 10px;
+    }
+
+    /* ── States ── */
+    .state-box {
+      text-align: center;
+      padding: 80px 20px;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .state-box .state-icon {
+      font-size: 2.5rem;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .state-box h2 {
+      font-size: 1.1rem;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    .state-box p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .spinner {
+      width: 28px;
+      height: 28px;
+      border: 2px solid var(--border);
+      border-top-color: var(--neon);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      margin: 0 auto 16px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* ── Result count ── */
+    .result-meta {
+      text-align: center;
+      font-family: var(--font-mono, 'Courier New', monospace);
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      padding: 16px 20px 0;
+    }
+
+    /* ── API key prompt ── */
+    .api-prompt {
+      background: var(--bg-card, #0f0f0f);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--neon);
+      border-radius: 3px;
+      padding: 20px 24px;
+      max-width: 600px;
+      margin: 40px auto;
+    }
+
+    .api-prompt h3 {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    .api-prompt p {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+
+    .api-prompt code {
+      font-family: var(--font-mono, 'Courier New', monospace);
+      font-size: 0.78rem;
+      background: #000;
+      color: var(--neon);
+      padding: 2px 6px;
+      border-radius: 2px;
+    }
+
+    .api-key-form {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .api-key-input {
+      flex: 1;
+      min-width: 200px;
+      background: #000;
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      padding: 8px 12px;
+      font-family: var(--font-mono, 'Courier New', monospace);
+      font-size: 0.8rem;
+      border-radius: 3px;
+      outline: none;
+    }
+
+    .api-key-input:focus {
+      border-color: var(--neon);
+    }
+
+    .btn-load {
+      background: var(--neon);
+      color: #000;
+      border: none;
+      padding: 8px 18px;
+      font-family: var(--font-mono, 'Courier New', monospace);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+
+    .btn-load:hover { opacity: 0.85; }
+    .btn-load:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    .key-note {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 8px;
+      margin-bottom: 0;
+    }
+
+    @media (max-width: 600px) {
+      .releases-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .filter-bar {
+        gap: 7px;
+      }
+
+      .platform-btn {
+        font-size: 0.72rem;
+        padding: 5px 10px;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .releases-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV (matches site shell) ── -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="site-logo">RESPAWNERZ</a>
+      <nav class="site-nav">
+        <a href="index.html">Home</a>
+        <a href="upcoming-releases.html" class="active">Releases</a>
+        <a href="trailers.html">Trailers</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ── HERO ── -->
+  <section class="releases-hero">
+    <p class="eyebrow">// RAWG API</p>
+    <h1>Upcoming Releases</h1>
+    <p>Every game dropping in the next 30 days. Filter by platform.</p>
+  </section>
+
+  <!-- ── MAIN ── -->
+  <main id="releases-main">
+
+    <!-- API key prompt (shown until key is saved) -->
+    <div class="api-prompt" id="key-prompt">
+      <h3>Enter your RAWG API key</h3>
+      <p>
+        This page pulls live data from the RAWG API. Get a free key at
+        <code>rawg.io/apidocs</code>, then paste it below. Your key is saved
+        locally in your browser and never sent anywhere except RAWG.
+      </p>
+      <div class="api-key-form">
+        <input
+          type="text"
+          id="api-key-input"
+          class="api-key-input"
+          placeholder="Paste RAWG API key..."
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <button class="btn-load" id="save-key-btn" onclick="saveKey()">Load</button>
+      </div>
+      <p class="key-note">Free tier: 20,000 requests/month. No credit card needed.</p>
+    </div>
+
+    <!-- Filter bar (hidden until data loads) -->
+    <div class="filter-bar" id="filter-bar" style="display:none;">
+      <label>Platform:</label>
+      <button class="platform-btn active" data-platform="all" onclick="filterBy('all', this)">All</button>
+      <button class="platform-btn" data-platform="4" onclick="filterBy('4', this)">PC</button>
+      <button class="platform-btn" data-platform="187" onclick="filterBy('187', this)">PS5</button>
+      <button class="platform-btn" data-platform="18" onclick="filterBy('18', this)">PS4</button>
+      <button class="platform-btn" data-platform="186" onclick="filterBy('186', this)">Xbox Series X</button>
+      <button class="platform-btn" data-platform="1" onclick="filterBy('1', this)">Xbox One</button>
+      <button class="platform-btn" data-platform="7" onclick="filterBy('7', this)">Switch</button>
+    </div>
+
+    <!-- Result count line -->
+    <p class="result-meta" id="result-meta" style="display:none;"></p>
+
+    <!-- Loading state -->
+    <div class="state-box" id="loading-state" style="display:none;">
+      <div class="spinner"></div>
+      <p>Fetching upcoming releases...</p>
+    </div>
+
+    <!-- Error state -->
+    <div class="state-box" id="error-state" style="display:none;">
+      <span class="state-icon">!</span>
+      <h2>Could not load releases</h2>
+      <p id="error-message">Check your API key and try again.</p>
+      <button class="btn-load" style="margin-top:16px;" onclick="resetKey()">Reset Key</button>
+    </div>
+
+    <!-- Empty state -->
+    <div class="state-box" id="empty-state" style="display:none;">
+      <span class="state-icon">0</span>
+      <h2>Nothing on this platform right now</h2>
+      <p>No releases found for the selected platform in the next 30 days. Try "All" or a different filter.</p>
+    </div>
+
+    <!-- Grid output -->
+    <div id="grid-wrapper">
+      <p class="month-label" id="month-label" style="display:none;"></p>
+      <div class="releases-grid" id="releases-grid"></div>
+    </div>
+
+  </main>
+
+  <!-- ── FOOTER (matches site shell) ── -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span class="footer-logo">RESPAWNERZ</span>
+      <p class="footer-copy">Gaming news. No ads. No fluff.</p>
+    </div>
+  </footer>
+
+  <script>
+    // ── Config ──────────────────────────────────────────────────
+    const RAWG_BASE = 'https://api.rawg.io/api';
+    const KEY_STORAGE = 'respawnerz_rawg_key';
+
+    // Platform slug map (RAWG platform IDs to readable names)
+    const PLATFORM_NAMES = {
+      4: 'PC', 187: 'PS5', 18: 'PS4', 1: 'Xbox One',
+      186: 'Xbox Series X', 7: 'Switch', 3: 'iOS',
+      21: 'Android', 14: 'Xbox 360', 16: 'PS3',
+      15: 'PlayStation 2', 27: 'PlayStation',
+    };
+
+    // ── State ────────────────────────────────────────────────────
+    let allGames = [];
+    let activePlatform = 'all';
+
+    // ── DOM refs ─────────────────────────────────────────────────
+    const $ = id => document.getElementById(id);
+
+    function show(id) { $(id).style.display = ''; }
+    function hide(id) { $(id).style.display = 'none'; }
+
+    // ── Init ─────────────────────────────────────────────────────
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedKey = localStorage.getItem(KEY_STORAGE);
+      if (savedKey) {
+        hide('key-prompt');
+        fetchReleases(savedKey);
+      }
+    });
+
+    // ── Save API key and fetch ────────────────────────────────────
+    function saveKey() {
+      const input = $('api-key-input');
+      const key = input.value.trim();
+      if (!key) { input.focus(); return; }
+      localStorage.setItem(KEY_STORAGE, key);
+      hide('key-prompt');
+      fetchReleases(key);
+    }
+
+    // Allow Enter key in the input
+    $('api-key-input').addEventListener('keydown', e => {
+      if (e.key === 'Enter') saveKey();
+    });
+
+    function resetKey() {
+      localStorage.removeItem(KEY_STORAGE);
+      hide('error-state');
+      show('key-prompt');
+    }
+
+    // ── Date helpers ──────────────────────────────────────────────
+    function todayStr() {
+      return new Date().toISOString().split('T')[0];
+    }
+
+    function in30Days() {
+      const d = new Date();
+      d.setDate(d.getDate() + 30);
+      return d.toISOString().split('T')[0];
+    }
+
+    function formatDate(str) {
+      if (!str) return 'TBA';
+      const d = new Date(str + 'T00:00:00');
+      return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    }
+
+    function daysUntil(str) {
+      if (!str) return null;
+      const diff = new Date(str + 'T00:00:00') - new Date();
+      const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+      if (days < 0) return 'Out now';
+      if (days === 0) return 'Today';
+      if (days === 1) return 'Tomorrow';
+      return `In ${days} days`;
+    }
+
+    function monthGroupLabel(str) {
+      if (!str) return 'TBA';
+      const d = new Date(str + 'T00:00:00');
+      return d.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }).toUpperCase();
+    }
+
+    // ── Fetch ─────────────────────────────────────────────────────
+    async function fetchReleases(key) {
+      show('loading-state');
+      hide('error-state');
+      hide('empty-state');
+      hide('filter-bar');
+      hide('result-meta');
+      $('releases-grid').innerHTML = '';
+      $('month-label').style.display = 'none';
+
+      const from = todayStr();
+      const to = in30Days();
+
+      // RAWG free tier: paginate up to 2 pages (40 results) to stay lean
+      try {
+        let results = [];
+        let url = `${RAWG_BASE}/games?key=${key}&dates=${from},${to}&ordering=released&page_size=40&page=1`;
+
+        const res = await fetch(url);
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({}));
+          throw new Error(err.detail || `API error ${res.status}`);
+        }
+        const data = await res.json();
+        results = data.results || [];
+
+        // If there is a second page and it won't exceed 80 total, fetch it
+        if (data.next && results.length === 40) {
+          const res2 = await fetch(data.next.replace('http://', 'https://'));
+          if (res2.ok) {
+            const data2 = await res2.json();
+            results = results.concat(data2.results || []);
+          }
+        }
+
+        allGames = results;
+        hide('loading-state');
+        show('filter-bar');
+        renderGames(allGames, 'all');
+
+      } catch (err) {
+        hide('loading-state');
+        show('error-state');
+        $('error-message').textContent = err.message || 'Something went wrong. Check your API key.';
+      }
+    }
+
+    // ── Filter ────────────────────────────────────────────────────
+    function filterBy(platform, btn) {
+      activePlatform = platform;
+      document.querySelectorAll('.platform-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderGames(allGames, platform);
+    }
+
+    // ── Render ────────────────────────────────────────────────────
+    function renderGames(games, platform) {
+      const grid = $('releases-grid');
+      grid.innerHTML = '';
+
+      let filtered = games;
+      if (platform !== 'all') {
+        const pid = parseInt(platform, 10);
+        filtered = games.filter(g =>
+          (g.platforms || []).some(p => p.platform.id === pid)
+        );
+      }
+
+      if (filtered.length === 0) {
+        show('empty-state');
+        hide('result-meta');
+        $('month-label').style.display = 'none';
+        return;
+      }
+
+      hide('empty-state');
+      show('result-meta');
+      $('result-meta').textContent = `${filtered.length} game${filtered.length !== 1 ? 's' : ''} releasing in the next 30 days`;
+
+      // Group by release month for the label
+      const firstGame = filtered[0];
+      const label = firstGame.released ? monthGroupLabel(firstGame.released) : '';
+      if (label) {
+        const ml = $('month-label');
+        ml.textContent = label;
+        ml.style.display = '';
+      }
+
+      filtered.forEach(game => renderCard(game, grid));
+    }
+
+    function renderCard(game, grid) {
+      const platforms = (game.platforms || []).map(p => {
+        const name = PLATFORM_NAMES[p.platform.id] || p.platform.name;
+        return `<span class="platform-tag">${escHtml(name)}</span>`;
+      }).join('');
+
+      const genres = (game.genres || []).map(g => g.name).join(', ');
+      const dateStr = formatDate(game.released);
+      const countdown = daysUntil(game.released);
+
+      const card = document.createElement('div');
+      card.className = 'game-card';
+      card.innerHTML = `
+        ${game.background_image
+          ? `<img class="game-card__thumb" src="${escHtml(game.background_image)}" alt="${escHtml(game.name)}" loading="lazy" />`
+          : `<div class="game-card__thumb-placeholder">
+               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                 <rect x="2" y="3" width="20" height="14" rx="2"/>
+                 <path d="M8 21h8M12 17v4"/>
+               </svg>
+             </div>`
+        }
+        <div class="game-card__body">
+          <p class="game-card__date">${escHtml(dateStr)}</p>
+          <p class="game-card__title">${escHtml(game.name)}</p>
+          <div class="game-card__platforms">${platforms}</div>
+          ${genres ? `<p class="game-card__genres">${escHtml(genres)}</p>` : ''}
+          ${countdown ? `<span class="countdown-badge">${escHtml(countdown)}</span>` : ''}
+        </div>
+      `;
+      grid.appendChild(card);
+    }
+
+    function escHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+  </script>
+
+</body>
+</html>
