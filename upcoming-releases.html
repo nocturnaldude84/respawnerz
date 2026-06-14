@@ -494,14 +494,8 @@
         thumbHtml = `<img class="game-card__thumb" src="${escHtml(url)}" alt="${escHtml(game.name)}" loading="lazy" />`;
       }
 
-      // Earliest upcoming release date for this game
-      const now = nowUnix();
-      const dates = (game.release_dates || [])
-        .map(r => r.date)
-        .filter(d => d && d >= now)
-        .sort((a, b) => a - b);
-      const releaseUnix = dates[0] || null;
-
+      // Release date comes pre-resolved from the Pages Function
+      const releaseUnix = game.releaseDate || null;
       const dateStr   = formatDate(releaseUnix);
       const countdown = daysUntil(releaseUnix);
 
