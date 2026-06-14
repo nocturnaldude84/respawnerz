@@ -389,8 +389,7 @@
     function hide(id) { $(id).style.display = 'none'; }
 
     // ── Date helpers
-    function nowUnix()    { return Math.floor(Date.now() / 1000); }
-    function in30Unix()   { return nowUnix() + (30 * 24 * 60 * 60); }
+    function nowUnix() { return Math.floor(Date.now() / 1000); }
 
     function formatDate(unix) {
       if (!unix) return 'TBA';
@@ -412,7 +411,7 @@
     // ── Init
     window.addEventListener('DOMContentLoaded', fetchReleases);
 
-    // ── Fetch token from Pages Function, then query IGDB
+    // ── Single call to Pages Function which handles token + IGDB query server-side
     async function fetchReleases() {
       show('loading-state');
       hide('error-state');
@@ -423,48 +422,15 @@
       $('releases-grid').innerHTML = '';
 
       try {
-        // Step 1: get token from our Pages Function
-        const tokenRes = await fetch('/igdb-token');
-        if (!tokenRes.ok) throw new Error('Failed to get API token.');
-        const { access_token, client_id } = await tokenRes.json();
-        if (!access_token) throw new Error('Invalid token response.');
+        const res = await fetch('/igdb-token');
+        if (!res.ok) throw new Error('Failed to reach API.');
+        const data = await res.json();
+        if (data.error) throw new Error(data.error);
+        if (!data.games) throw new Error('No game data returned.');
 
-        // Step 2: query IGDB for upcoming releases
-        // release_dates.date between now and 30 days from now
-        // fields we need: name, cover, platforms, genres, release_dates
-        const from = nowUnix();
-        const to   = in30Unix();
-
-        const body = `
-          fields name, cover.url, platforms.id, platforms.name, genres.name, release_dates.date, release_dates.platform;
-          where release_dates.date >= ${from}
-            & release_dates.date <= ${to}
-            & category = 0
-            & version_parent = null;
-          sort release_dates.date asc;
-          limit 80;
-        `;
-
-        const igdbRes = await fetch('https://api.igdb.com/v4/games', {
-          method: 'POST',
-          headers: {
-            'Client-ID': client_id,
-            'Authorization': `Bearer ${access_token}`,
-            'Content-Type': 'text/plain',
-          },
-          body,
-        });
-
-        if (!igdbRes.ok) {
-          const err = await igdbRes.text();
-          throw new Error(`IGDB error: ${err}`);
-        }
-
-        const games = await igdbRes.json();
-
-        // Deduplicate by id (IGDB can return same game for multiple release dates)
+        // Deduplicate by id
         const seen = new Set();
-        allGames = games.filter(g => {
+        allGames = data.games.filter(g => {
           if (seen.has(g.id)) return false;
           seen.add(g.id);
           return true;
