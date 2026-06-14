@@ -1,16 +1,146 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
-<url>
-<loc>https://nocturnaldude84.github.io/respawnerz/</loc>
-</url>
+  <!-- Main Pages -->
+  <url>
+    <loc>https://nocturnaldude84.github.io/respawnerz/</loc>
+    <lastmod>2026-06-14</lastmod>
+  </url>
 
-<url>
-<loc>https://nocturnaldude84.github.io/respawnerz/news.html</loc>
-</url>
+  <url>
+    <loc>https://nocturnaldude84.github.io/respawnerz/news.html</loc>
+    <lastmod>2026-06-13</lastmod>
+  </url>
 
-<url>
-<loc>https://nocturnaldude84.github.io/respawnerz/GTA6.html</loc>
-</url>
+  <url>
+    <loc>https://nocturnaldude84.github.io/respawnerz/trailers.html</loc>
+    <lastmod>2026-06-14</lastmod>
+  </url>
+
+  <url>
+    <loc>https://nocturnaldude84.github.io/respawnerz/trailers-feed.html</loc>
+    <lastmod>2026-06-14</lastmod>
+  </url>
+
+  <url>
+    <loc>https://nocturnaldude84.github.io/respawnerz/guides.html</loc>
+    <lastmod>2026-06-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://nocturnaldude84.github.io/respawnerz/esports.html</loc>
+    <lastmod>2026-06-14</lastmod>
+  </url>
+
+  <url>
+    <loc>https://nocturnaldude84.github.io/respawnerz/reviews.html</loc>
+    <lastmod>2026-06-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://nocturnaldude84.github.io/respawnerz/upcoming-releases.html</loc>
+    <lastmod>2026-06-14</lastmod>
+  </url>
+
+  <url>
+    <loc>https://nocturnaldude84.github.io/respawnerz/search.html</loc>
+    <lastmod>2026-06-13</lastmod>
+  </url>
+
+  <url>
+    <loc>https://nocturnaldude84.github.io/respawnerz/about.html</loc>
+    <lastmod>2026-06-13</lastmod>
+  </url>
+
+  <url>
+    <loc>https://nocturnaldude84.github.io/respawnerz/contact.html</loc>
+    <lastmod>2026-06-13</lastmod>
+  </url>
+
+  <!-- Articles -->
+  <url>
+    <loc>https://nocturnaldude84.github.io/respawnerz/GTA6.html</loc>
+    <lastmod>2026-06-10</lastmod>
+  </url>
+
+  <url>
+    <loc>https://nocturnaldude84.github.io/respawnerz/007-first-light-stealth-guide.html</loc>
+    <lastmod>2026-06-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://nocturnaldude84.github.io/respawnerz/barbie-rewind-godzilla-november-gta6.html</loc>
+    <lastmod>2026-06-13</lastmod>
+  </url>
+
+  <url>
+    <loc>https://nocturnaldude84.github.io/respawnerz/clockwork-revolution-heist-trailer.html</loc>
+    <lastmod>2026-06-14</lastmod>
+  </url>
+
+  <url>
+    <loc>https://nocturnaldude84.github.io/respawnerz/cs2-iem-cologne-major-2026-stage-3.html</loc>
+    <lastmod>2026-06-13</lastmod>
+  </url>
+
+  <url>
+    <loc>https://nocturnaldude84.github.io/respawnerz/elder-scrolls-6-xbox-update-2026.html</loc>
+    <lastmod>2026-06-13</lastmod>
+  </url>
+
+  <url>
+    <loc>https://nocturnaldude84.github.io/respawnerz/forza-horizon-6-save-bug-fix.html</loc>
+    <lastmod>2026-06-12</lastmod>
+  </url>
+
+  <url>
+    <loc>https://nocturnaldude84.github.io/respawnerz/gears-of-war-eday-gameplay-reveal.html</loc>
+    <lastmod>2026-06-13</lastmod>
+  </url>
+
+  <url>
+    <loc>https://nocturnaldude84.github.io/respawnerz/gta6-hype-industry-impact-2026.html</loc>
+    <lastmod>2026-06-13</lastmod>
+  </url>
+
+  <url>
+    <loc>https://nocturnaldude84.github.io/respawnerz/iem-cologne-major-2026-stage3-day2.html</loc>
+    <lastmod>2026-06-13</lastmod>
+  </url>
+
+  <url>
+    <loc>https://nocturnaldude84.github.io/respawnerz/little-nightmares-3-backstage-dlc-breakdown.html</loc>
+    <lastmod>2026-06-13</lastmod>
+  </url>
+
+  <url>
+    <loc>https://nocturnaldude84.github.io/respawnerz/mw4-dmz-first-look-trailer-breakdown.html</loc>
+    <lastmod>2026-06-13</lastmod>
+  </url>
+
+  <url>
+    <loc>https://nocturnaldude84.github.io/respawnerz/mw4-everything-we-know.html</loc>
+    <lastmod>2026-06-13</lastmod>
+  </url>
+
+  <url>
+    <loc>https://nocturnaldude84.github.io/respawnerz/tomb-raider-legacy-of-atlantis-blog.html</loc>
+    <lastmod>2026-06-14</lastmod>
+  </url>
+
+  <url>
+    <loc>https://nocturnaldude84.github.io/respawnerz/ubisoft-restructuring-2026.html</loc>
+    <lastmod>2026-06-13</lastmod>
+  </url>
+
+  <url>
+    <loc>https://nocturnaldude84.github.io/respawnerz/xbox-layoffs-studio-closure-2026.html</loc>
+    <lastmod>2026-06-13</lastmod>
+  </url>
+
+  <url>
+    <loc>https://nocturnaldude84.github.io/respawnerz/zelda-ocarina-of-time-remake.html</loc>
+    <lastmod>2026-06-13</lastmod>
+  </url>
 
 </urlset>
