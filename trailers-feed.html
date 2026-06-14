@@ -2,61 +2,63 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="assets/favicon-64x64.png" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Trailers | Respawnerz</title>
-  <meta name="description" content="Latest gaming trailers from IGN, Xbox, PlayStation, and Nintendo. Auto-updated via YouTube." />
+  <meta name="description" content="Latest gaming trailers auto-pulled from IGN, Xbox, PlayStation, and Nintendo." />
+  <meta property="og:title" content="Trailers Feed - Respawnerz" />
+  <meta property="og:description" content="Latest gaming trailers auto-pulled from IGN, Xbox, PlayStation, and Nintendo." />
+  <meta property="og:url" content="https://respawnerz.pages.dev/trailers-feed.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://respawnerz.pages.dev/assets/respawnerz.webp" />
+  <title>Trailers Feed - Respawnerz</title>
   <link rel="stylesheet" href="style.css" />
   <style>
-    /* ── Page-scoped styles ── */
-    .trailers-hero {
-      padding: 60px 20px 40px;
-      text-align: center;
+    .feed-hero {
+      padding: 48px 0 32px;
       border-bottom: 1px solid var(--border);
     }
 
-    .trailers-hero .eyebrow {
-      font-family: var(--font-mono, 'Courier New', monospace);
+    .archive-label {
+      font-family: var(--font-mono);
       font-size: 0.72rem;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--neon);
-      margin-bottom: 12px;
+      color: var(--accent);
+      margin-bottom: 10px;
     }
 
-    .trailers-hero h1 {
-      font-size: clamp(2rem, 5vw, 3.2rem);
+    .archive-title {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
       font-weight: 800;
       color: var(--text-primary);
-      margin: 0 0 12px;
+      margin: 0 0 10px;
       line-height: 1.15;
     }
 
-    .trailers-hero p {
-      color: var(--text-muted);
-      font-size: 1rem;
-      max-width: 520px;
-      margin: 0 auto;
+    .archive-subtitle {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
     }
 
-    /* ── Channel filter tabs ── */
+    /* Channel tabs */
     .channel-tabs {
       display: flex;
       flex-wrap: wrap;
       gap: 0;
       border-bottom: 1px solid var(--border);
-      padding: 0 20px;
-      max-width: 1200px;
-      margin: 0 auto;
+      padding: 0;
+      margin-top: 0;
     }
 
     .channel-tab {
       background: transparent;
       border: none;
       border-bottom: 2px solid transparent;
-      color: var(--text-muted);
+      color: var(--text-secondary);
       padding: 14px 18px;
-      font-family: var(--font-mono, 'Courier New', monospace);
-      font-size: 0.72rem;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       cursor: pointer;
@@ -69,22 +71,31 @@
     }
 
     .channel-tab.active {
-      color: var(--neon);
-      border-bottom-color: var(--neon);
+      color: var(--accent);
+      border-bottom-color: var(--accent);
     }
 
-    /* ── Videos grid ── */
+    /* Result meta */
+    .result-meta {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      padding: 20px 0 4px;
+    }
+
+    /* Videos grid */
     .videos-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
       gap: 1px;
       background: var(--border);
-      max-width: 1200px;
-      margin: 0 auto 60px;
+      margin-bottom: 60px;
     }
 
     .video-card {
-      background: var(--bg-card, #0f0f0f);
+      background: var(--bg-primary);
       display: flex;
       flex-direction: column;
       cursor: pointer;
@@ -92,16 +103,16 @@
     }
 
     .video-card:hover {
-      background: var(--bg-card-hover, #161616);
+      background: var(--bg-secondary);
     }
 
-    /* Thumbnail wrapper with play overlay */
+    /* Thumbnail */
     .video-card__thumb-wrap {
       position: relative;
       width: 100%;
       aspect-ratio: 16 / 9;
       overflow: hidden;
-      background: #111;
+      background: var(--bg-secondary);
     }
 
     .video-card__thumb {
@@ -122,7 +133,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: rgba(0, 0, 0, 0.3);
+      background: rgba(0, 0, 0, 0.35);
       opacity: 0;
       transition: opacity 0.15s;
     }
@@ -137,26 +148,12 @@
       filter: drop-shadow(0 2px 8px rgba(0,0,0,0.8));
     }
 
-    /* Duration badge */
-    .duration-badge {
-      position: absolute;
-      bottom: 7px;
-      right: 8px;
-      background: rgba(0, 0, 0, 0.82);
-      color: #fff;
-      font-family: var(--font-mono, 'Courier New', monospace);
-      font-size: 0.62rem;
-      padding: 2px 5px;
-      border-radius: 2px;
-      letter-spacing: 0.04em;
-    }
-
-    /* Channel source tag */
+    /* Channel badge */
     .channel-badge {
       position: absolute;
       top: 8px;
       left: 8px;
-      font-family: var(--font-mono, 'Courier New', monospace);
+      font-family: var(--font-mono);
       font-size: 0.58rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
@@ -165,29 +162,30 @@
       font-weight: 700;
     }
 
-    .channel-badge.ign    { background: #e10000; color: #fff; }
-    .channel-badge.xbox   { background: #107c10; color: #fff; }
-    .channel-badge.ps     { background: #003791; color: #fff; }
+    .channel-badge.ign      { background: #e10000; color: #fff; }
+    .channel-badge.xbox     { background: #107c10; color: #fff; }
+    .channel-badge.ps       { background: #003791; color: #fff; }
     .channel-badge.nintendo { background: #e4000f; color: #fff; }
 
+    /* Card body */
     .video-card__body {
-      padding: 14px 16px 18px;
+      padding: 12px 14px 16px;
       flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 5px;
     }
 
     .video-card__channel {
-      font-family: var(--font-mono, 'Courier New', monospace);
+      font-family: var(--font-mono);
       font-size: 0.62rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--neon);
+      color: var(--accent);
     }
 
     .video-card__title {
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       font-weight: 700;
       color: var(--text-primary);
       line-height: 1.35;
@@ -198,12 +196,12 @@
     }
 
     .video-card__meta {
-      font-size: 0.75rem;
-      color: var(--text-muted);
+      font-size: 0.72rem;
+      color: var(--text-secondary);
       margin-top: auto;
     }
 
-    /* ── Inline player modal ── */
+    /* Player modal */
     .player-modal {
       display: none;
       position: fixed;
@@ -231,14 +229,16 @@
       right: 0;
       background: transparent;
       border: none;
-      color: var(--text-muted);
+      color: var(--text-secondary);
       font-size: 1.5rem;
       cursor: pointer;
       padding: 4px 8px;
       line-height: 1;
     }
 
-    .player-close:hover { color: var(--text-primary); }
+    .player-close:hover {
+      color: var(--text-primary);
+    }
 
     .player-frame-wrap {
       width: 100%;
@@ -253,37 +253,29 @@
       display: block;
     }
 
-    /* ── States ── */
+    /* States */
     .state-box {
       text-align: center;
       padding: 80px 20px;
-      max-width: 480px;
-      margin: 0 auto;
-    }
-
-    .state-box .state-icon {
-      font-size: 2.5rem;
-      margin-bottom: 16px;
-      display: block;
     }
 
     .state-box h2 {
-      font-size: 1.1rem;
+      font-size: 1rem;
       color: var(--text-primary);
       margin-bottom: 8px;
     }
 
     .state-box p {
-      font-size: 0.85rem;
-      color: var(--text-muted);
+      font-size: 0.82rem;
+      color: var(--text-secondary);
       line-height: 1.6;
     }
 
     .spinner {
-      width: 28px;
-      height: 28px;
+      width: 26px;
+      height: 26px;
       border: 2px solid var(--border);
-      border-top-color: var(--neon);
+      border-top-color: var(--accent);
       border-radius: 50%;
       animation: spin 0.7s linear infinite;
       margin: 0 auto 16px;
@@ -291,97 +283,25 @@
 
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* ── API key prompt ── */
-    .api-prompt {
-      background: var(--bg-card, #0f0f0f);
-      border: 1px solid var(--border);
-      border-left: 3px solid var(--neon);
-      border-radius: 3px;
-      padding: 20px 24px;
-      max-width: 640px;
-      margin: 40px auto;
-    }
-
-    .api-prompt h3 {
-      font-size: 0.9rem;
-      font-weight: 700;
-      color: var(--text-primary);
-      margin-bottom: 8px;
-    }
-
-    .api-prompt p {
-      font-size: 0.82rem;
-      color: var(--text-muted);
-      line-height: 1.6;
-      margin-bottom: 12px;
-    }
-
-    .api-prompt code {
-      font-family: var(--font-mono, 'Courier New', monospace);
-      font-size: 0.78rem;
-      background: #000;
-      color: var(--neon);
-      padding: 2px 6px;
-      border-radius: 2px;
-    }
-
-    .api-key-form {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .api-key-input {
-      flex: 1;
-      min-width: 200px;
-      background: #000;
-      border: 1px solid var(--border);
-      color: var(--text-primary);
-      padding: 8px 12px;
-      font-family: var(--font-mono, 'Courier New', monospace);
-      font-size: 0.8rem;
-      border-radius: 3px;
-      outline: none;
-    }
-
-    .api-key-input:focus { border-color: var(--neon); }
-
-    .btn-load {
-      background: var(--neon);
-      color: #000;
-      border: none;
-      padding: 8px 18px;
-      font-family: var(--font-mono, 'Courier New', monospace);
-      font-size: 0.78rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      border-radius: 3px;
-      cursor: pointer;
-      transition: opacity 0.15s;
-    }
-
-    .btn-load:hover { opacity: 0.85; }
-    .btn-load:disabled { opacity: 0.4; cursor: not-allowed; }
-
-    .key-note {
+    /* Also link back to curated trailers page */
+    .curated-link {
+      display: inline-block;
+      font-family: var(--font-mono);
       font-size: 0.72rem;
-      color: var(--text-muted);
-      margin-top: 8px;
-      margin-bottom: 0;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      padding: 6px 14px;
+      border-radius: 2px;
+      text-decoration: none;
+      margin-top: 16px;
+      transition: background 0.15s, color 0.15s;
     }
 
-    /* result meta */
-    .result-meta {
-      text-align: center;
-      font-family: var(--font-mono, 'Courier New', monospace);
-      font-size: 0.68rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      padding: 20px 20px 4px;
-      max-width: 1200px;
-      margin: 0 auto;
+    .curated-link:hover {
+      background: var(--accent);
+      color: var(--bg-primary);
     }
 
     @media (max-width: 600px) {
@@ -390,8 +310,8 @@
       }
 
       .channel-tab {
-        padding: 12px 12px;
-        font-size: 0.65rem;
+        padding: 12px 10px;
+        font-size: 0.62rem;
       }
     }
 
@@ -404,87 +324,74 @@
 </head>
 <body>
 
-  <!-- ── NAV ── -->
+  <!-- HEADER -->
   <header class="site-header">
-    <div class="header-inner">
-      <a href="index.html" class="site-logo">RESPAWNERZ</a>
-      <nav class="site-nav">
-        <a href="index.html">Home</a>
-        <a href="upcoming-releases.html">Releases</a>
-        <a href="trailers.html" class="active">Trailers</a>
-      </nav>
+    <div class="container">
+      <div class="header-inner">
+        <a href="index.html" class="site-logo">RESP<span>AWN</span>ERZ</a>
+        <nav class="main-nav" id="main-nav">
+          <a href="index.html">Home</a>
+          <a href="news.html">News</a>
+          <a href="trailers.html">Trailers</a>
+          <a href="upcoming-releases.html">Releases</a>
+          <a href="reviews.html">Reviews</a>
+          <a href="guides.html">Guides</a>
+          <a href="esports.html">Esports</a>
+        </nav>
+        <div class="header-search">
+          <span class="search-icon">&#128269;</span>
+          <input type="text" placeholder="Search games..." />
+        </div>
+        <button class="mobile-menu-btn" onclick="document.getElementById('main-nav').classList.toggle('open')">&#9776;</button>
+      </div>
     </div>
   </header>
 
-  <!-- ── HERO ── -->
-  <section class="trailers-hero">
-    <p class="eyebrow">// YouTube Data API v3</p>
-    <h1>Latest Trailers</h1>
-    <p>Auto-pulled from IGN, Xbox, PlayStation, and Nintendo. Updated on every page load.</p>
-  </section>
+  <main>
+    <div class="container">
 
-  <!-- ── MAIN ── -->
-  <main id="trailers-main">
-
-    <!-- API key prompt -->
-    <div class="api-prompt" id="key-prompt">
-      <h3>Enter your YouTube Data API v3 key</h3>
-      <p>
-        Get a free key from <code>console.cloud.google.com</code>. Enable the
-        YouTube Data API v3, create a browser-restricted API key, and paste it below.
-        Your key is saved in your browser only and only used to call YouTube directly.
-      </p>
-      <p>
-        Free quota: <code>10,000 units/day</code>. This page uses roughly 4 units
-        per channel fetch, so you can reload ~2,500 times per day before hitting the limit.
-      </p>
-      <div class="api-key-form">
-        <input
-          type="text"
-          id="api-key-input"
-          class="api-key-input"
-          placeholder="Paste YouTube API key..."
-          autocomplete="off"
-          spellcheck="false"
-        />
-        <button class="btn-load" id="save-key-btn" onclick="saveKey()">Load</button>
+      <!-- PAGE HEADER -->
+      <div class="feed-hero">
+        <p class="archive-label">// YouTube</p>
+        <h1 class="archive-title">Trailers Feed</h1>
+        <p class="archive-subtitle">
+          Latest uploads from IGN, Xbox, PlayStation, and Nintendo. Updated on every load.
+        </p>
+        <a href="trailers.html" class="curated-link">View curated picks instead</a>
       </div>
-      <p class="key-note">Your key is never stored server-side. It lives in localStorage only.</p>
+
+      <!-- CHANNEL TABS -->
+      <div class="channel-tabs" id="channel-tabs" style="display:none;">
+        <button class="channel-tab active" data-channel="all"                    onclick="switchTab('all', this)">All</button>
+        <button class="channel-tab"        data-channel="UCKy1dAqELo0zrOtPkf0aTMg" onclick="switchTab('UCKy1dAqELo0zrOtPkf0aTMg', this)">IGN</button>
+        <button class="channel-tab"        data-channel="UCpvtp7mH0jtBy3nHpIsM0jQ" onclick="switchTab('UCpvtp7mH0jtBy3nHpIsM0jQ', this)">Xbox</button>
+        <button class="channel-tab"        data-channel="UC-2Y8dQb0S6DtpxNgAKoJKA" onclick="switchTab('UC-2Y8dQb0S6DtpxNgAKoJKA', this)">PlayStation</button>
+        <button class="channel-tab"        data-channel="UCGIY_O-8vW4rfX98KlMkvRg" onclick="switchTab('UCGIY_O-8vW4rfX98KlMkvRg', this)">Nintendo</button>
+      </div>
+
+      <!-- Result meta -->
+      <p class="result-meta" id="result-meta" style="display:none;"></p>
+
+      <!-- Loading -->
+      <div class="state-box" id="loading-state">
+        <div class="spinner"></div>
+        <p>Fetching latest trailers...</p>
+      </div>
+
+      <!-- Error -->
+      <div class="state-box" id="error-state" style="display:none;">
+        <h2>Could not load trailers</h2>
+        <p id="error-message">Something went wrong. Try refreshing the page.</p>
+      </div>
+
+      <!-- Videos grid -->
+      <div class="videos-grid" id="videos-grid" style="display:none;"></div>
+
     </div>
-
-    <!-- Channel tabs (hidden until data loads) -->
-    <div class="channel-tabs" id="channel-tabs" style="display:none;">
-      <button class="channel-tab active" data-channel="all" onclick="switchTab('all', this)">All Channels</button>
-      <button class="channel-tab" data-channel="UCKy1dAqELo0zrOtPkf0aTMg" onclick="switchTab('UCKy1dAqELo0zrOtPkf0aTMg', this)">IGN</button>
-      <button class="channel-tab" data-channel="UCpvtp7mH0jtBy3nHpIsM0jQ" onclick="switchTab('UCpvtp7mH0jtBy3nHpIsM0jQ', this)">Xbox</button>
-      <button class="channel-tab" data-channel="UC-2Y8dQb0S6DtpxNgAKoJKA" onclick="switchTab('UC-2Y8dQb0S6DtpxNgAKoJKA', this)">PlayStation</button>
-      <button class="channel-tab" data-channel="UCGIY_O-8vW4rfX98KlMkvRg" onclick="switchTab('UCGIY_O-8vW4rfX98KlMkvRg', this)">Nintendo</button>
-    </div>
-
-    <!-- Result meta -->
-    <p class="result-meta" id="result-meta" style="display:none;"></p>
-
-    <!-- Loading state -->
-    <div class="state-box" id="loading-state" style="display:none;">
-      <div class="spinner"></div>
-      <p id="loading-msg">Fetching trailers...</p>
-    </div>
-
-    <!-- Error state -->
-    <div class="state-box" id="error-state" style="display:none;">
-      <span class="state-icon">!</span>
-      <h2>Could not load trailers</h2>
-      <p id="error-message">Check your API key and try again.</p>
-      <button class="btn-load" style="margin-top:16px;" onclick="resetKey()">Reset Key</button>
-    </div>
-
-    <!-- Videos grid -->
-    <div class="videos-grid" id="videos-grid"></div>
-
   </main>
 
-  <!-- ── PLAYER MODAL ── -->
-  <div class="player-modal" id="player-modal" onclick="closePlayer(event)">
+  <!-- PLAYER MODAL -->
+  <div class="player-modal" id="player-modal" onclick="closeBackdrop(event)">
     <div class="player-inner" id="player-inner">
       <button class="player-close" onclick="closeModal()" aria-label="Close">&times;</button>
       <div class="player-frame-wrap">
@@ -497,160 +404,105 @@
     </div>
   </div>
 
-  <!-- ── FOOTER ── -->
+  <!-- FOOTER -->
   <footer class="site-footer">
-    <div class="footer-inner">
-      <span class="footer-logo">RESPAWNERZ</span>
-      <p class="footer-copy">Gaming news. No ads. No fluff.</p>
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="index.html" class="site-logo">RESP<span>AWN</span>ERZ</a>
+          <p>Gaming news and trailers, delivered fast. No padding, no filler - just what dropped.</p>
+        </div>
+        <div>
+          <p class="footer-heading">Coverage</p>
+          <ul class="footer-links">
+            <li><a href="news.html">News</a></li>
+            <li><a href="trailers.html">Trailers</a></li>
+            <li><a href="upcoming-releases.html">Releases</a></li>
+            <li><a href="reviews.html">Reviews</a></li>
+            <li><a href="guides.html">Guides</a></li>
+            <li><a href="esports.html">Esports</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer-heading">Platform</p>
+          <ul class="footer-links">
+            <li><a href="#">PlayStation</a></li>
+            <li><a href="#">Xbox</a></li>
+            <li><a href="#">Nintendo</a></li>
+            <li><a href="#">PC</a></li>
+            <li><a href="#">Mobile</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer-heading">Site</p>
+          <ul class="footer-links">
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copy">&copy; 2026 Respawnerz. All rights reserved.</p>
+        <div class="footer-social">
+          <a href="#" class="social-link" title="X / Twitter">&#120143;</a>
+          <a href="#" class="social-link" title="YouTube">&#9654;</a>
+          <a href="#" class="social-link" title="Instagram">&#9638;</a>
+        </div>
+      </div>
     </div>
   </footer>
 
   <script>
-    // ── Channel config ────────────────────────────────────────────
-    // YouTube channel IDs for each source
-    const CHANNELS = [
-      { id: 'UCKy1dAqELo0zrOtPkf0aTMg', name: 'IGN',         badge: 'ign',      maxResults: 12 },
-      { id: 'UCpvtp7mH0jtBy3nHpIsM0jQ', name: 'Xbox',        badge: 'xbox',     maxResults: 8  },
-      { id: 'UC-2Y8dQb0S6DtpxNgAKoJKA', name: 'PlayStation', badge: 'ps',       maxResults: 8  },
-      { id: 'UCGIY_O-8vW4rfX98KlMkvRg', name: 'Nintendo',    badge: 'nintendo', maxResults: 8  },
-    ];
+    // ── State
+    let allVideos = [];
 
-    const YT_BASE = 'https://www.googleapis.com/youtube/v3';
-    const KEY_STORAGE = 'respawnerz_yt_key';
-
-    // ── State ─────────────────────────────────────────────────────
-    let allVideos = []; // { id, title, thumb, channelName, channelId, badge, publishedAt }
-    let activeChannel = 'all';
-
-    // ── DOM helpers ───────────────────────────────────────────────
+    // ── DOM helpers
     const $ = id => document.getElementById(id);
     function show(id) { $(id).style.display = ''; }
     function hide(id) { $(id).style.display = 'none'; }
 
-    // ── Init ──────────────────────────────────────────────────────
-    window.addEventListener('DOMContentLoaded', () => {
-      const key = localStorage.getItem(KEY_STORAGE);
-      if (key) {
-        hide('key-prompt');
-        fetchAllChannels(key);
-      }
-    });
+    // ── Init
+    window.addEventListener('DOMContentLoaded', fetchFeed);
 
-    // ── Save key ──────────────────────────────────────────────────
-    function saveKey() {
-      const input = $('api-key-input');
-      const key = input.value.trim();
-      if (!key) { input.focus(); return; }
-      localStorage.setItem(KEY_STORAGE, key);
-      hide('key-prompt');
-      fetchAllChannels(key);
-    }
-
-    $('api-key-input').addEventListener('keydown', e => {
-      if (e.key === 'Enter') saveKey();
-    });
-
-    function resetKey() {
-      localStorage.removeItem(KEY_STORAGE);
-      allVideos = [];
-      hide('error-state');
-      $('videos-grid').innerHTML = '';
-      hide('channel-tabs');
-      hide('result-meta');
-      show('key-prompt');
-    }
-
-    // ── Fetch ─────────────────────────────────────────────────────
-    async function fetchAllChannels(key) {
+    // ── Fetch from Pages Function
+    async function fetchFeed() {
       show('loading-state');
       hide('error-state');
       hide('channel-tabs');
       hide('result-meta');
+      $('videos-grid').style.display = 'none';
       $('videos-grid').innerHTML = '';
 
-      const results = [];
-      const errors = [];
+      try {
+        const res = await fetch('/youtube-feed');
+        if (!res.ok) throw new Error('Failed to reach API.');
+        const data = await res.json();
+        if (data.error) throw new Error(data.error);
+        if (!data.videos || data.videos.length === 0) throw new Error('No videos returned.');
 
-      for (const ch of CHANNELS) {
-        $('loading-msg').textContent = `Fetching ${ch.name}...`;
-        try {
-          const videos = await fetchChannelVideos(key, ch);
-          results.push(...videos);
-        } catch (err) {
-          errors.push(`${ch.name}: ${err.message}`);
-        }
-      }
+        allVideos = data.videos;
 
-      hide('loading-state');
+        hide('loading-state');
+        show('channel-tabs');
+        renderVideos(allVideos, 'all');
 
-      if (results.length === 0) {
+      } catch (err) {
+        hide('loading-state');
         show('error-state');
-        $('error-message').textContent = errors.length
-          ? errors.join(' | ')
-          : 'No trailers found. Check your API key or quota.';
-        return;
+        $('error-message').textContent = err.message || 'Something went wrong.';
       }
-
-      // Sort by publishedAt descending (newest first)
-      results.sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
-      allVideos = results;
-
-      show('channel-tabs');
-      renderVideos(allVideos, 'all');
     }
 
-    async function fetchChannelVideos(key, ch) {
-      // Search for uploads in the channel (type=video, order=date)
-      // This uses ~1 unit per request (search.list is 100 units per 100 results, but a single request = 1 call)
-      // Actually YouTube search.list costs 100 units. To stay lean we use channels.list to get the uploads
-      // playlist ID first (1 unit), then playlistItems.list (1 unit). Total: ~2 units per channel.
-
-      // Step 1: get uploads playlist ID
-      const chRes = await fetch(
-        `${YT_BASE}/channels?part=contentDetails&id=${ch.id}&key=${key}`
-      );
-      if (!chRes.ok) {
-        const err = await chRes.json().catch(() => ({}));
-        throw new Error(err.error?.message || `HTTP ${chRes.status}`);
-      }
-      const chData = await chRes.json();
-      const uploadsId = chData.items?.[0]?.contentDetails?.relatedPlaylists?.uploads;
-      if (!uploadsId) throw new Error('Uploads playlist not found');
-
-      // Step 2: get latest videos from uploads playlist
-      const plRes = await fetch(
-        `${YT_BASE}/playlistItems?part=snippet&playlistId=${uploadsId}&maxResults=${ch.maxResults}&key=${key}`
-      );
-      if (!plRes.ok) {
-        const err = await plRes.json().catch(() => ({}));
-        throw new Error(err.error?.message || `HTTP ${plRes.status}`);
-      }
-      const plData = await plRes.json();
-
-      return (plData.items || []).map(item => ({
-        id: item.snippet.resourceId.videoId,
-        title: item.snippet.title,
-        thumb:
-          item.snippet.thumbnails?.maxres?.url ||
-          item.snippet.thumbnails?.high?.url ||
-          item.snippet.thumbnails?.medium?.url ||
-          '',
-        channelName: ch.name,
-        channelId: ch.id,
-        badge: ch.badge,
-        publishedAt: item.snippet.publishedAt,
-      }));
-    }
-
-    // ── Tab switching ─────────────────────────────────────────────
+    // ── Tab switching
     function switchTab(channelId, btn) {
-      activeChannel = channelId;
       document.querySelectorAll('.channel-tab').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       renderVideos(allVideos, channelId);
     }
 
-    // ── Render ────────────────────────────────────────────────────
+    // ── Render
     function renderVideos(videos, channelId) {
       const grid = $('videos-grid');
       grid.innerHTML = '';
@@ -660,8 +512,9 @@
         : videos.filter(v => v.channelId === channelId);
 
       show('result-meta');
+      grid.style.display = '';
       $('result-meta').textContent =
-        `${filtered.length} trailer${filtered.length !== 1 ? 's' : ''} — ${channelId === 'all' ? 'all channels' : filtered[0]?.channelName || channelId}`;
+        `${filtered.length} trailer${filtered.length !== 1 ? 's' : ''} — ${channelId === 'all' ? 'all channels' : (filtered[0]?.channelName || '')}`;
 
       filtered.forEach(v => renderCard(v, grid));
     }
@@ -680,12 +533,12 @@
         <div class="video-card__thumb-wrap">
           ${video.thumb
             ? `<img class="video-card__thumb" src="${escHtml(video.thumb)}" alt="${escHtml(video.title)}" loading="lazy" />`
-            : `<div style="width:100%;height:100%;background:#111;"></div>`
+            : `<div style="width:100%;height:100%;background:var(--bg-secondary);"></div>`
           }
           <div class="play-overlay">
-            <svg viewBox="0 0 24 24" fill="none">
-              <circle cx="12" cy="12" r="12" fill="rgba(0,0,0,0.6)"/>
-              <polygon points="9,7 19,12 9,17" fill="var(--neon)"/>
+            <svg viewBox="0 0 48 48" fill="none">
+              <circle cx="24" cy="24" r="24" fill="rgba(0,0,0,0.6)"/>
+              <polygon points="18,13 38,24 18,35" fill="var(--accent)"/>
             </svg>
           </div>
           <span class="channel-badge ${escHtml(video.badge)}">${escHtml(video.channelName)}</span>
@@ -699,7 +552,7 @@
       grid.appendChild(card);
     }
 
-    // ── Player modal ──────────────────────────────────────────────
+    // ── Player modal
     function openPlayer(videoId) {
       $('yt-iframe').src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
       $('player-modal').classList.add('open');
@@ -712,8 +565,7 @@
       document.body.style.overflow = '';
     }
 
-    function closePlayer(e) {
-      // Close only if clicking the backdrop, not the inner player
+    function closeBackdrop(e) {
       if (e.target === $('player-modal')) closeModal();
     }
 
@@ -721,7 +573,7 @@
       if (e.key === 'Escape') closeModal();
     });
 
-    // ── Helpers ───────────────────────────────────────────────────
+    // ── Helpers
     function timeAgo(dateStr) {
       if (!dateStr) return '';
       const diff = Date.now() - new Date(dateStr).getTime();
@@ -733,8 +585,7 @@
       if (days < 7) return `${days}d ago`;
       const wks = Math.floor(days / 7);
       if (wks < 5) return `${wks}w ago`;
-      const d = new Date(dateStr);
-      return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      return new Date(dateStr).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
     }
 
     function escHtml(str) {
