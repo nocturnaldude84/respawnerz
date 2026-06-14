@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://nocturnaldude84.github.io/respawnerz/sitemap.xml
+Sitemap: https://respawnerz.pages.dev/sitemap.xml
