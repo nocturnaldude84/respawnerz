@@ -346,3 +346,19 @@
 
 </body>
 </html>
+<script>
+  function filterByHash() {
+    const hash = window.location.hash.replace('#', '');
+    const cards = document.querySelectorAll('.post-card-grid');
+    cards.forEach(card => {
+      if (!hash || card.dataset.platform.includes(hash)) {
+        card.style.display = '';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  }
+
+  window.addEventListener('hashchange', filterByHash);
+  window.addEventListener('DOMContentLoaded', filterByHash);
+</script>
