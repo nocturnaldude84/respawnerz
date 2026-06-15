@@ -1414,6 +1414,9 @@ p:last-child {
   transition: opacity 0.2s;
 }
 
-.btn-trailers-feed:hover {
+.btn-trailers-feed:hover,
+.btn-trailers-feed:focus,
+.btn-trailers-feed:visited {
+  color: #000;
   opacity: 0.85;
 }
