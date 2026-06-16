@@ -464,6 +464,77 @@ p:last-child {
   gap: 16px;
 }
 
+/* Featured Post - Full-Bleed Image with Text Overlay */
+.post-hero-overlay {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  display: block;
+  aspect-ratio: 16/9;
+  transition: border-color var(--transition-slow);
+}
+
+.post-hero-overlay:hover {
+  border-color: var(--accent);
+  box-shadow: var(--shadow-neon);
+}
+
+.post-hero-overlay-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform var(--transition-slow);
+}
+
+.post-hero-overlay:hover .post-hero-overlay-image {
+  transform: scale(1.03);
+}
+
+.post-hero-overlay-scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(8, 12, 16, 0.05) 0%, rgba(8, 12, 16, 0.55) 55%, rgba(8, 12, 16, 0.95) 100%);
+}
+
+.post-hero-overlay-body {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 28px;
+  z-index: 1;
+}
+
+.post-hero-overlay .post-category {
+  margin-bottom: 14px;
+}
+
+.post-hero-overlay h2 {
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  margin-bottom: 12px;
+  line-height: 1.08;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+}
+
+.post-hero-overlay h2 a:hover {
+  color: var(--accent);
+}
+
+.post-hero-overlay .post-excerpt {
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+  margin-bottom: 14px;
+  max-width: 600px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 /* ============================================================
    POST CARDS
    ============================================================ */
