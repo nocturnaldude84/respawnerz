@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://respawnerz.pages.dev/sitemap.xml
+Sitemap: https://respawnerz.in/sitemap.xml
