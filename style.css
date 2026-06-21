@@ -1624,3 +1624,10 @@ p:last-child {
 @media (max-width: 900px) {
   .hubs-grid { grid-template-columns: 1fr; }
 }
+.content-image {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 1.5rem 0;
+  display: block;
+}
