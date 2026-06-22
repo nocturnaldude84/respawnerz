@@ -1636,6 +1636,7 @@ p:last-child {
     align-items: center;
     gap: 6px;
     margin-top: 12px;
+    margin-bottom: 12px;
     padding: 6px 14px;
     background: transparent;
     border: 1px solid var(--accent);
