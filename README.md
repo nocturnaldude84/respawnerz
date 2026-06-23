@@ -13,7 +13,7 @@ Respawnerz is an independent gaming publication covering:
 - Game Announcements
 - Industry Developments
 - Guides and Fixes
-- PC, PlayStation, Xbox, Nintendo, and Mobile Gaming
+- PC, PlayStation, Xbox, Nintendo, Esports and Mobile Gaming
 
 Our goal is simple: deliver fast, clear, and informative gaming coverage without unnecessary fluff.
 
