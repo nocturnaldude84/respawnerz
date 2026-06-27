@@ -1654,14 +1654,31 @@ p:last-child {
     background: var(--accent);
     color: var(--bg);
 }
-table th:nth-child(n+3),
-table td:nth-child(n+3) {
+.schedule-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: auto;
+}
+
+.schedule-table th:first-child,
+.schedule-table td:first-child {
+    width: 42%;
+}
+
+.schedule-table th:nth-child(2),
+.schedule-table td:nth-child(2) {
+    width: 22%;
+}
+
+.schedule-table th:nth-child(n+3),
+.schedule-table td:nth-child(n+3) {
     min-width: 95px;
     white-space: nowrap;
     text-align: center;
 }
 
-table th,
-table td {
+.schedule-table th,
+.schedule-table td {
     padding: 12px 18px;
+    vertical-align: middle;
 }
