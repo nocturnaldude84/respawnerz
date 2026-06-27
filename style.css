@@ -1654,3 +1654,14 @@ p:last-child {
     background: var(--accent);
     color: var(--bg);
 }
+table th:nth-child(n+3),
+table td:nth-child(n+3) {
+    min-width: 95px;
+    white-space: nowrap;
+    text-align: center;
+}
+
+table th,
+table td {
+    padding: 12px 18px;
+}
